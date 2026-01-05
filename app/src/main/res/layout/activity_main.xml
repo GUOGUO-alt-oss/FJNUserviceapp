@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 渐变背景 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background">
+
+        <!-- Fragment容器 -->
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- 五边形布局的圆形按钮 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+        <!-- 中心点，用于定位 -->
+        <View
+            android:id="@+id/center_point"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 1号按钮：学习（五边形顶部，0度） -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_study"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/primary_color"
+            android:elevation="8dp"
+            android:text="学习"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:cornerRadius="35dp"
+            app:layout_constraintCircle="@id/center_point"
+            app:layout_constraintCircleAngle="0"
+            app:layout_constraintCircleRadius="80dp" />
+
+        <!-- 2号按钮：生活（五边形右侧上，72度） -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_life"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/secondary_color"
+            android:elevation="8dp"
+            android:text="生活"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:cornerRadius="35dp"
+            app:layout_constraintCircle="@id/center_point"
+            app:layout_constraintCircleAngle="72"
+            app:layout_constraintCircleRadius="80dp" />
+
+        <!-- 3号按钮：导航（五边形右侧下，144度） -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_nav"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/tertiary_color"
+            android:elevation="8dp"
+            android:text="导航"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:cornerRadius="35dp"
+            app:layout_constraintCircle="@id/center_point"
+            app:layout_constraintCircleAngle="144"
+            app:layout_constraintCircleRadius="80dp" />
+
+        <!-- 4号按钮：通知（五边形左侧下，216度） -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_notify"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/quaternary_color"
+            android:elevation="8dp"
+            android:text="通知"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:cornerRadius="35dp"
+            app:layout_constraintCircle="@id/center_point"
+            app:layout_constraintCircleAngle="216"
+            app:layout_constraintCircleRadius="80dp" />
+
+        <!-- 5号按钮：我的（五边形左侧上，288度） -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_mine"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/quinary_color"
+            android:elevation="8dp"
+            android:text="我的"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:cornerRadius="35dp"
+            app:layout_constraintCircle="@id/center_point"
+            app:layout_constraintCircleAngle="288"
+            app:layout_constraintCircleRadius="80dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

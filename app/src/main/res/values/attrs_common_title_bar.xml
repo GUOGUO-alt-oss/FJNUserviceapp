@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 统一标题栏自定义属性 -->
+    <declare-styleable name="CommonTitleBar">
+        <!-- 标题文字 -->
+        <attr name="title" format="string" />
+        <!-- 是否显示左侧按钮，默认显示 -->
+        <attr name="showLeftBtn" format="boolean" />
+        <!-- 右侧按钮文字 -->
+        <attr name="rightText" format="string" />
+    </declare-styleable>
+</resources>

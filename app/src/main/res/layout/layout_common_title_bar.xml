@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="?attr/colorPrimary">
+
+    <!-- 左侧按钮 -->
+    <ImageView
+        android:id="@+id/iv_left"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:padding="12dp"
+        android:background="@android:color/transparent"
+        android:tint="@android:color/white" />
+
+    <!-- 标题文字 -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="标题"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- 右侧文字按钮 -->
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <!-- 右侧图标按钮 -->
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:padding="12dp"
+        android:tint="@android:color/white"
+        android:visibility="gone" />
+
+</FrameLayout>
