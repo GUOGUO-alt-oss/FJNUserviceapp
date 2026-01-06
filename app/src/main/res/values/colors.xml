@@ -7,4 +7,5 @@
     <color name="tertiary_color">#FFB00020</color>
     <color name="quaternary_color">#FF3700B3</color>
     <color name="quinary_color">#FF018786</color>
+    <color name="light_blue">#F0F8FF</color>
 </resources>

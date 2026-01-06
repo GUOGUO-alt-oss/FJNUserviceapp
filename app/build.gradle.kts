@@ -64,4 +64,8 @@ dependencies {
     // 图片加载
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+
+    // 新增：通知模块必需的2个依赖（ViewPager2 + RecyclerView）
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 }
