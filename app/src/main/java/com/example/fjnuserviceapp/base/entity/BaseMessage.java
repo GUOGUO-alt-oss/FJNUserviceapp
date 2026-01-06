@@ -36,6 +36,7 @@ public class BaseMessage implements Parcelable {
     // 优化：参数名改为isRead，和字段名一致（无运行时影响，仅规范）
     public void setRead(boolean isRead) { this.isRead = isRead; }
 
+
     // 空构造方法
     public BaseMessage() {}
 

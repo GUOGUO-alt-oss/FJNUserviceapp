@@ -54,9 +54,8 @@ public class CollegeNotifyAdapter extends RecyclerView.Adapter<CollegeNotifyAdap
                 onItemClickListener.onItemClick(message);
             }
             // 跳转到详情页
-            Intent intent = new Intent(context, CollegeNotifyDetailActivity.class);
-            intent.putExtra("notify_data", message); // 传递通知数据
-            context.startActivity(intent);
+
+
         });
     }
 
