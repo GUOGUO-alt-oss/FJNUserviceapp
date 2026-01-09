@@ -9,111 +9,21 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import com.example.fjnuserviceapp.R;
 import com.example.fjnuserviceapp.databinding.ActivityMainBinding;
 import com.example.fjnuserviceapp.ui.life.LifeFragment;
 import com.example.fjnuserviceapp.ui.mine.MineFragment;
 import com.example.fjnuserviceapp.ui.nav.NavFragment;
 import com.example.fjnuserviceapp.ui.notify.NotifyFragment;
 import com.example.fjnuserviceapp.ui.study.StudyFragment;
-// 新增权限请求码（常量）
+
 import static android.Manifest.permission.POST_NOTIFICATIONS;
 
 public class MainActivity extends AppCompatActivity {
 
-    // 新增：通知权限请求码（自定义，只要是int即可）
     private static final int NOTIFICATION_PERMISSION_CODE = 1001;
     private ActivityMainBinding binding;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // 新增：Android 13+ 动态申请通知权限（核心修改）
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // 检查权限是否已授予
-            if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS)
-                    != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                // 未授予则申请权限
-                ActivityCompat.requestPermissions(
-                        this,
-                        new String[]{POST_NOTIFICATIONS},
-                        NOTIFICATION_PERMISSION_CODE
-                );
-            }
-        }
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        // 默认显示学习Fragment
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new StudyFragment())
-                    .commit();
-        }
-
-        // 圆形按钮点击事件
-        binding.btnStudy.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new StudyFragment())
-                    .commit();
-            // ========== 新增：切回学习模块时显示所有悬浮按钮 ==========
-            showAllFloatButtons();
-        });
-
-        binding.btnLife.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new LifeFragment())
-                    .commit();
-            // ========== 新增：切回生活模块时显示所有悬浮按钮 ==========
-            showAllFloatButtons();
-        });
-
-        binding.btnNav.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new NavFragment())
-                    .commit();
-            // ========== 新增：切回导航模块时显示所有悬浮按钮 ==========
-            showAllFloatButtons();
-        });
-
-        binding.btnNotify.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new NotifyFragment())
-                    .commit();
-            // ========== 新增：进入通知模块时隐藏所有悬浮按钮 ==========
-            hideAllFloatButtons();
-        });
-
-        binding.btnMine.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new MineFragment())
-                    .commit();
-            // ========== 新增：切回我的模块时显示所有悬浮按钮 ==========
-            showAllFloatButtons();
-        });
-
-        // 启动按钮动画
-        startButtonAnimations();
-    }
-
-    /**
-     * ========== 新增方法：隐藏所有底部悬浮按钮 ==========
-     * 进入通知模块时调用，让通知页面无遮挡
-     */
-    private void hideAllFloatButtons() {
-        binding.btnStudy.setVisibility(View.GONE);
-        binding.btnLife.setVisibility(View.GONE);
-        binding.btnNav.setVisibility(View.GONE);
-        binding.btnNotify.setVisibility(View.GONE);
-        binding.btnMine.setVisibility(View.GONE);
-    }
-
-    /**
-     * ========== 新增方法：显示所有底部悬浮按钮 ==========
-     * 切回其他模块时调用，恢复按钮显示
-     */
+    /* ---------- 底部按钮显隐 ---------- */
     private void showAllFloatButtons() {
         binding.btnStudy.setVisibility(View.VISIBLE);
         binding.btnLife.setVisibility(View.VISIBLE);
@@ -122,89 +32,126 @@ public class MainActivity extends AppCompatActivity {
         binding.btnMine.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * 启动按钮动画，从底部中间一个一个以圆弧路径上来
-     */
+    private void hideAllFloatButtons() {
+        binding.btnStudy.setVisibility(View.GONE);
+        binding.btnLife.setVisibility(View.GONE);
+        binding.btnNav.setVisibility(View.GONE);
+        binding.btnNotify.setVisibility(View.GONE);
+        binding.btnMine.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS)
+                    != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{POST_NOTIFICATIONS},
+                        NOTIFICATION_PERMISSION_CODE);
+            }
+        }
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new StudyFragment())
+                    .commit();
+        }
+
+        binding.btnStudy.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new StudyFragment())
+                    .commit();
+            showAllFloatButtons();
+        });
+
+        binding.btnLife.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new LifeFragment())
+                    .commit();
+            hideAllFloatButtons();   // ← 生活页也隐藏
+        });
+
+        binding.btnNav.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new NavFragment())
+                    .commit();
+            showAllFloatButtons();
+        });
+
+        binding.btnNotify.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new NotifyFragment())
+                    .commit();
+            hideAllFloatButtons();   // ← 通知页保持隐藏（原逻辑）
+        });
+
+        binding.btnMine.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new MineFragment())
+                    .commit();
+            showAllFloatButtons();
+        });
+
+        startButtonAnimations();
+    }
+
+    /* 以下代码与原文件完全一致 */
     private void startButtonAnimations() {
-        // 设置初始位置：所有按钮都在底部中间
         binding.btnStudy.setTranslationY(500);
         binding.btnLife.setTranslationY(500);
         binding.btnNav.setTranslationY(500);
         binding.btnNotify.setTranslationY(500);
         binding.btnMine.setTranslationY(500);
-
-        // 设置初始透明度
         binding.btnStudy.setAlpha(0f);
         binding.btnLife.setAlpha(0f);
         binding.btnNav.setAlpha(0f);
         binding.btnNotify.setAlpha(0f);
         binding.btnMine.setAlpha(0f);
 
-        // 定义动画时长
         long duration = 1000;
-        // 定义动画延迟间隔
         long delay = 150;
 
-        // 学习按钮动画
         AnimatorSet studyAnimator = createButtonAnimator(binding.btnStudy, 0, duration);
         studyAnimator.start();
 
-        // 生活按钮动画（延迟150ms）
         AnimatorSet lifeAnimator = createButtonAnimator(binding.btnLife, 72, duration);
         lifeAnimator.setStartDelay(delay);
         lifeAnimator.start();
 
-        // 导航按钮动画（延迟300ms）
         AnimatorSet navAnimator = createButtonAnimator(binding.btnNav, 144, duration);
         navAnimator.setStartDelay(delay * 2);
         navAnimator.start();
 
-        // 通知按钮动画（延迟450ms）
         AnimatorSet notifyAnimator = createButtonAnimator(binding.btnNotify, 216, duration);
         notifyAnimator.setStartDelay(delay * 3);
         notifyAnimator.start();
 
-        // 我的按钮动画（延迟600ms）
         AnimatorSet mineAnimator = createButtonAnimator(binding.btnMine, 288, duration);
         mineAnimator.setStartDelay(delay * 4);
         mineAnimator.start();
     }
 
-    /**
-     * 创建按钮的圆弧路径动画
-     * @param button 按钮
-     * @param angle 最终角度
-     * @param duration 动画时长
-     * @return AnimatorSet
-     */
     private AnimatorSet createButtonAnimator(View button, int angle, long duration) {
-        // 创建动画集合
-        AnimatorSet animatorSet = new AnimatorSet();
-
-        // 计算目标位置（基于圆心和半径）
+        AnimatorSet set = new AnimatorSet();
         float radius = 80f;
-        float centerX = button.getWidth() / 2f;
-        float centerY = button.getHeight() / 2f;
         float targetX = (float) Math.sin(Math.toRadians(angle)) * radius;
         float targetY = (float) -Math.cos(Math.toRadians(angle)) * radius;
 
-        // 平移X动画
-        ObjectAnimator translationX = ObjectAnimator.ofFloat(button, "translationX", 0f, targetX);
-        translationX.setDuration(duration);
-        translationX.setInterpolator(new AccelerateDecelerateInterpolator());
-
-        // 平移Y动画
-        ObjectAnimator translationY = ObjectAnimator.ofFloat(button, "translationY", 500f, targetY);
-        translationY.setDuration(duration);
-        translationY.setInterpolator(new AccelerateDecelerateInterpolator());
-
-        // 透明度动画
+        ObjectAnimator transX = ObjectAnimator.ofFloat(button, "translationX", 0f, targetX);
+        ObjectAnimator transY = ObjectAnimator.ofFloat(button, "translationY", 500f, targetY);
         ObjectAnimator alpha = ObjectAnimator.ofFloat(button, "alpha", 0f, 1f);
+
+        transX.setDuration(duration);
+        transY.setDuration(duration);
         alpha.setDuration(duration);
+        transX.setInterpolator(new AccelerateDecelerateInterpolator());
+        transY.setInterpolator(new AccelerateDecelerateInterpolator());
         alpha.setInterpolator(new AccelerateDecelerateInterpolator());
 
-        // 组合动画
-        animatorSet.playTogether(translationX, translationY, alpha);
-        return animatorSet;
+        set.playTogether(transX, transY, alpha);
+        return set;
     }
 }
