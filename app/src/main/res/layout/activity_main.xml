@@ -4,23 +4,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- 渐变背景 -->
+    <!-- 背景渐变 -->
+    <View
+        android:id="@+id/background_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background" />
+
+    <!-- 装饰性圆形元素 -->
+    <View
+        android:id="@+id/decor_circle_top_left"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/decor_circle"
+        android:alpha="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/decor_circle_top_right"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/decor_circle"
+        android:alpha="0.2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 水面涟漪效果View -->
+    <com.example.fjnuserviceapp.ui.widget.WaterRippleView
+        android:id="@+id/water_ripple_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Fragment容器 -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- 五边形布局的圆形按钮 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_background">
-
-        <!-- Fragment容器 -->
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!-- 五边形布局的圆形按钮 -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp">
+        android:padding="16dp">
 
         <!-- 中心点，用于定位 -->
         <View
@@ -38,76 +72,111 @@
             android:id="@+id/btn_study"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:backgroundTint="@color/primary_color"
+            android:backgroundTint="@android:color/transparent"
             android:elevation="8dp"
             android:text="学习"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             app:cornerRadius="35dp"
+            app:icon="@drawable/ic_study"
+            app:iconTint="@android:color/white"
+            app:rippleColor="@android:color/white"
             app:layout_constraintCircle="@id/center_point"
             app:layout_constraintCircleAngle="0"
-            app:layout_constraintCircleRadius="80dp" />
+            app:layout_constraintCircleRadius="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <!-- 2号按钮：生活（五边形右侧上，72度） -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_life"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:backgroundTint="@color/secondary_color"
+            android:backgroundTint="@android:color/transparent"
             android:elevation="8dp"
             android:text="生活"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             app:cornerRadius="35dp"
+            app:icon="@drawable/ic_life"
+            app:iconTint="@android:color/white"
+            app:rippleColor="@android:color/white"
             app:layout_constraintCircle="@id/center_point"
             app:layout_constraintCircleAngle="72"
-            app:layout_constraintCircleRadius="80dp" />
+            app:layout_constraintCircleRadius="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <!-- 3号按钮：导航（五边形右侧下，144度） -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_nav"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:backgroundTint="@color/tertiary_color"
+            android:backgroundTint="@android:color/transparent"
             android:elevation="8dp"
             android:text="导航"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             app:cornerRadius="35dp"
+            app:icon="@drawable/ic_nav"
+            app:iconTint="@android:color/white"
+            app:rippleColor="@android:color/white"
             app:layout_constraintCircle="@id/center_point"
             app:layout_constraintCircleAngle="144"
-            app:layout_constraintCircleRadius="80dp" />
+            app:layout_constraintCircleRadius="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <!-- 4号按钮：通知（五边形左侧下，216度） -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_notify"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:backgroundTint="@color/quaternary_color"
+            android:backgroundTint="@android:color/transparent"
             android:elevation="8dp"
             android:text="通知"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             app:cornerRadius="35dp"
+            app:icon="@drawable/ic_notify"
+            app:iconTint="@android:color/white"
+            app:rippleColor="@android:color/white"
             app:layout_constraintCircle="@id/center_point"
             app:layout_constraintCircleAngle="216"
-            app:layout_constraintCircleRadius="80dp" />
+            app:layout_constraintCircleRadius="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <!-- 5号按钮：我的（五边形左侧上，288度） -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_mine"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:backgroundTint="@color/quinary_color"
+            android:backgroundTint="@android:color/transparent"
             android:elevation="8dp"
             android:text="我的"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             app:cornerRadius="35dp"
+            app:icon="@drawable/ic_mine"
+            app:iconTint="@android:color/white"
+            app:rippleColor="@android:color/white"
             app:layout_constraintCircle="@id/center_point"
             app:layout_constraintCircleAngle="288"
-            app:layout_constraintCircleRadius="80dp" />
+            app:layout_constraintCircleRadius="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

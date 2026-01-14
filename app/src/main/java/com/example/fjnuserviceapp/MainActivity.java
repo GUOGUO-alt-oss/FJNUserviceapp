@@ -2,10 +2,13 @@ package com.example.fjnuserviceapp;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.fjnuserviceapp.R;
 import com.example.fjnuserviceapp.databinding.ActivityMainBinding;
 import com.example.fjnuserviceapp.ui.life.LifeFragment;
@@ -13,6 +16,9 @@ import com.example.fjnuserviceapp.ui.mine.MineFragment;
 import com.example.fjnuserviceapp.ui.nav.NavFragment;
 import com.example.fjnuserviceapp.ui.notify.NotifyFragment;
 import com.example.fjnuserviceapp.ui.study.StudyFragment;
+import com.example.fjnuserviceapp.ui.widget.WaterRippleView;
+import com.example.fjnuserviceapp.utils.AnimationUtils;
+import com.example.fjnuserviceapp.utils.BlurUtils;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -30,124 +36,134 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-        // 圆形按钮点击事件
-        binding.btnStudy.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new StudyFragment())
-                    .commit();
-        });
+        // 设置按钮点击事件
+        binding.btnStudy.setOnClickListener(v -> switchFragment(new StudyFragment()));
+        binding.btnLife.setOnClickListener(v -> switchFragment(new LifeFragment()));
+        binding.btnNav.setOnClickListener(v -> switchFragment(new NavFragment()));
+        binding.btnNotify.setOnClickListener(v -> switchFragment(new NotifyFragment()));
+        binding.btnMine.setOnClickListener(v -> switchFragment(new MineFragment()));
 
-        binding.btnLife.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new LifeFragment())
-                    .commit();
-        });
-
-        binding.btnNav.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new NavFragment())
-                    .commit();
-        });
-
-        binding.btnNotify.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new NotifyFragment())
-                    .commit();
-        });
-
-        binding.btnMine.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new MineFragment())
-                    .commit();
-        });
+        // 初始化液态玻璃按钮
+        initGlassButtons();
 
         // 启动按钮动画
         startButtonAnimations();
+
+        // 启动背景动画
+        startBackgroundAnimation();
     }
 
     /**
-     * 启动按钮动画，从底部中间一个一个以圆弧路径上来
+     * 初始化液态玻璃按钮
+     */
+    private void initGlassButtons() {
+        View[] buttons = {
+            binding.btnStudy,
+            binding.btnLife,
+            binding.btnNav,
+            binding.btnNotify,
+            binding.btnMine
+        };
+
+        for (View button : buttons) {
+            // 设置液态玻璃背景
+            button.setBackgroundResource(R.drawable.glass_morphism_background);
+            // 应用模糊效果
+            BlurUtils.applyBlur(this, button, 10);
+            // 添加阴影效果
+            button.setElevation(12f);
+            button.setTranslationZ(8f);
+        }
+    }
+
+    /**
+     * 启动按钮动画
      */
     private void startButtonAnimations() {
-        // 设置初始位置：所有按钮都在底部中间
-        binding.btnStudy.setTranslationY(500);
-        binding.btnLife.setTranslationY(500);
-        binding.btnNav.setTranslationY(500);
-        binding.btnNotify.setTranslationY(500);
-        binding.btnMine.setTranslationY(500);
+        // 获取屏幕尺寸
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float screenHeight = metrics.heightPixels;
 
-        // 设置初始透明度
-        binding.btnStudy.setAlpha(0f);
-        binding.btnLife.setAlpha(0f);
-        binding.btnNav.setAlpha(0f);
-        binding.btnNotify.setAlpha(0f);
-        binding.btnMine.setAlpha(0f);
+        // 动画总时长
+        long duration = 1500;
+        // 按钮动画延迟间隔
+        long delayInterval = 100;
 
-        // 定义动画时长
-        long duration = 1000;
-        // 定义动画延迟间隔
-        long delay = 150;
+        // 按钮起始位置（屏幕底部外）
+        float startY = screenHeight + 100;
 
-        // 学习按钮动画
-        AnimatorSet studyAnimator = createButtonAnimator(binding.btnStudy, 0, duration);
-        studyAnimator.start();
+        // 重置按钮的初始状态，确保它们在动画开始前是可见的
+        resetButtonState(binding.btnStudy);
+        resetButtonState(binding.btnLife);
+        resetButtonState(binding.btnNav);
+        resetButtonState(binding.btnNotify);
+        resetButtonState(binding.btnMine);
 
-        // 生活按钮动画（延迟150ms）
-        AnimatorSet lifeAnimator = createButtonAnimator(binding.btnLife, 72, duration);
-        lifeAnimator.setStartDelay(delay);
-        lifeAnimator.start();
+        // 创建每个按钮的动画
+        AnimatorSet studyAnim = AnimationUtils.createRiseFromBottomAnimation(
+            binding.btnStudy, startY, duration, 0
+        );
 
-        // 导航按钮动画（延迟300ms）
-        AnimatorSet navAnimator = createButtonAnimator(binding.btnNav, 144, duration);
-        navAnimator.setStartDelay(delay * 2);
-        navAnimator.start();
+        AnimatorSet lifeAnim = AnimationUtils.createRiseFromBottomAnimation(
+            binding.btnLife, startY, duration, delayInterval
+        );
 
-        // 通知按钮动画（延迟450ms）
-        AnimatorSet notifyAnimator = createButtonAnimator(binding.btnNotify, 216, duration);
-        notifyAnimator.setStartDelay(delay * 3);
-        notifyAnimator.start();
+        AnimatorSet navAnim = AnimationUtils.createRiseFromBottomAnimation(
+            binding.btnNav, startY, duration, delayInterval * 2
+        );
 
-        // 我的按钮动画（延迟600ms）
-        AnimatorSet mineAnimator = createButtonAnimator(binding.btnMine, 288, duration);
-        mineAnimator.setStartDelay(delay * 4);
-        mineAnimator.start();
+        AnimatorSet notifyAnim = AnimationUtils.createRiseFromBottomAnimation(
+            binding.btnNotify, startY, duration, delayInterval * 3
+        );
+
+        AnimatorSet mineAnim = AnimationUtils.createRiseFromBottomAnimation(
+            binding.btnMine, startY, duration, delayInterval * 4
+        );
+
+        // 启动所有动画
+        studyAnim.start();
+        lifeAnim.start();
+        navAnim.start();
+        notifyAnim.start();
+        mineAnim.start();
     }
 
     /**
-     * 创建按钮的圆弧路径动画
-     * @param button 按钮
-     * @param angle 最终角度
-     * @param duration 动画时长
-     * @return AnimatorSet
+     * 重置按钮的初始状态
      */
-    private AnimatorSet createButtonAnimator(View button, int angle, long duration) {
-        // 创建动画集合
-        AnimatorSet animatorSet = new AnimatorSet();
+    private void resetButtonState(View button) {
+        button.setAlpha(1f);
+        button.setScaleX(1f);
+        button.setScaleY(1f);
+        button.setTranslationX(0f);
+        button.setTranslationY(0f);
+    }
 
-        // 计算目标位置（基于圆心和半径）
-        float radius = 80f;
-        float centerX = button.getWidth() / 2f;
-        float centerY = button.getHeight() / 2f;
-        float targetX = (float) Math.sin(Math.toRadians(angle)) * radius;
-        float targetY = (float) -Math.cos(Math.toRadians(angle)) * radius;
+    /**
+     * 启动背景动画
+     */
+    private void startBackgroundAnimation() {
+        // 启动背景颜色渐变动画
+        ObjectAnimator colorAnimator = ObjectAnimator.ofObject(
+            binding.backgroundView,
+            "backgroundColor",
+            new android.animation.ArgbEvaluator(),
+            getResources().getColor(R.color.gradient_start),
+            getResources().getColor(R.color.gradient_mid),
+            getResources().getColor(R.color.gradient_end)
+        );
+        colorAnimator.setDuration(10000);
+        colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        colorAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        colorAnimator.start();
+    }
 
-        // 平移X动画
-        ObjectAnimator translationX = ObjectAnimator.ofFloat(button, "translationX", 0f, targetX);
-        translationX.setDuration(duration);
-        translationX.setInterpolator(new AccelerateDecelerateInterpolator());
-
-        // 平移Y动画
-        ObjectAnimator translationY = ObjectAnimator.ofFloat(button, "translationY", 500f, targetY);
-        translationY.setDuration(duration);
-        translationY.setInterpolator(new AccelerateDecelerateInterpolator());
-
-        // 透明度动画
-        ObjectAnimator alpha = ObjectAnimator.ofFloat(button, "alpha", 0f, 1f);
-        alpha.setDuration(duration);
-        alpha.setInterpolator(new AccelerateDecelerateInterpolator());
-
-        // 组合动画
-        animatorSet.playTogether(translationX, translationY, alpha);
-        return animatorSet;
+    /**
+     * 切换Fragment
+     */
+    private void switchFragment(androidx.fragment.app.Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 }

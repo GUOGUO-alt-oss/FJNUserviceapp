@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="56dp"
     android:background="?attr/colorPrimary">
@@ -11,7 +12,7 @@
         android:layout_height="match_parent"
         android:padding="12dp"
         android:background="@android:color/transparent"
-        android:tint="@android:color/white" />
+        app:tint="@android:color/white" />
 
     <!-- 标题文字 -->
     <TextView
@@ -44,7 +45,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:padding="12dp"
-        android:tint="@android:color/white"
+        app:tint="@android:color/white"
         android:visibility="gone" />
 
 </FrameLayout>

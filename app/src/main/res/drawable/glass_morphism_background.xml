@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#AAFFFFFF" /> <!-- 增加透明度，使效果更明显 -->
+    <stroke
+        android:width="2dp"
+        android:color="#EEFFFFFF" /> <!-- 增加边框宽度和透明度 -->
+    <corners android:radius="35dp" /> <!-- 圆角，与按钮大小匹配 -->
+    <padding
+        android:left="8dp"
+        android:top="8dp"
+        android:right="8dp"
+        android:bottom="8dp" />
+</shape>

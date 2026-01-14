@@ -7,4 +7,7 @@
     <color name="tertiary_color">#FFB00020</color>
     <color name="quaternary_color">#FF3700B3</color>
     <color name="quinary_color">#FF018786</color>
+    <color name="gradient_start">#8A00C8FF</color>
+    <color name="gradient_mid">#8A1E90FF</color>
+    <color name="gradient_end">#8A7B1FA2</color>
 </resources>
