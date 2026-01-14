@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 列表视图 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCollegeNotify"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- 加载中视图（默认隐藏） -->
+    <LinearLayout
+        android:id="@+id/llLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:indeterminateTint="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="正在加载通知..."
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- 空数据视图（默认隐藏） -->
+    <LinearLayout
+        android:id="@+id/llEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_empty" /> <!-- 自己加一个空数据图标 -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="暂无学院通知"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</RelativeLayout>

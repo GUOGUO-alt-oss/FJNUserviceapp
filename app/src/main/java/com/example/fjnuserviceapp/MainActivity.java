@@ -4,10 +4,13 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.fjnuserviceapp.R;
 import com.example.fjnuserviceapp.databinding.ActivityMainBinding;
@@ -20,12 +23,32 @@ import com.example.fjnuserviceapp.ui.widget.WaterRippleView;
 import com.example.fjnuserviceapp.utils.AnimationUtils;
 import com.example.fjnuserviceapp.utils.BlurUtils;
 
+// 新增权限请求码（常量）
+import static android.Manifest.permission.POST_NOTIFICATIONS;
+
 public class MainActivity extends AppCompatActivity {
+
+    // 新增：通知权限请求码（自定义，只要是int即可）
+    private static final int NOTIFICATION_PERMISSION_CODE = 1001;
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 新增：Android 13+ 动态申请通知权限（核心修改）
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // 检查权限是否已授予
+            if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS)
+                    != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                // 未授予则申请权限
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{POST_NOTIFICATIONS},
+                        NOTIFICATION_PERMISSION_CODE
+                );
+            }
+        }
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -36,12 +59,36 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-        // 设置按钮点击事件
-        binding.btnStudy.setOnClickListener(v -> switchFragment(new StudyFragment()));
-        binding.btnLife.setOnClickListener(v -> switchFragment(new LifeFragment()));
-        binding.btnNav.setOnClickListener(v -> switchFragment(new NavFragment()));
-        binding.btnNotify.setOnClickListener(v -> switchFragment(new NotifyFragment()));
-        binding.btnMine.setOnClickListener(v -> switchFragment(new MineFragment()));
+        // 圆形按钮点击事件
+        binding.btnStudy.setOnClickListener(v -> {
+            switchFragment(new StudyFragment());
+            // ========== 新增：切回学习模块时显示所有悬浮按钮 ==========
+            showAllFloatButtons();
+        });
+
+        binding.btnLife.setOnClickListener(v -> {
+            switchFragment(new LifeFragment());
+            // ========== 新增：切回生活模块时显示所有悬浮按钮 ==========
+            showAllFloatButtons();
+        });
+
+        binding.btnNav.setOnClickListener(v -> {
+            switchFragment(new NavFragment());
+            // ========== 新增：切回导航模块时显示所有悬浮按钮 ==========
+            showAllFloatButtons();
+        });
+
+        binding.btnNotify.setOnClickListener(v -> {
+            switchFragment(new NotifyFragment());
+            // ========== 新增：进入通知模块时隐藏所有悬浮按钮 ==========
+            hideAllFloatButtons();
+        });
+
+        binding.btnMine.setOnClickListener(v -> {
+            switchFragment(new MineFragment());
+            // ========== 新增：切回我的模块时显示所有悬浮按钮 ==========
+            showAllFloatButtons();
+        });
 
         // 初始化液态玻璃按钮
         initGlassButtons();
@@ -74,6 +121,30 @@ public class MainActivity extends AppCompatActivity {
             button.setElevation(12f);
             button.setTranslationZ(8f);
         }
+    }
+
+    /**
+     * ========== 新增方法：隐藏所有底部悬浮按钮 ==========
+     * 进入通知模块时调用，让通知页面无遮挡
+     */
+    private void hideAllFloatButtons() {
+        binding.btnStudy.setVisibility(View.GONE);
+        binding.btnLife.setVisibility(View.GONE);
+        binding.btnNav.setVisibility(View.GONE);
+        binding.btnNotify.setVisibility(View.GONE);
+        binding.btnMine.setVisibility(View.GONE);
+    }
+
+    /**
+     * ========== 新增方法：显示所有底部悬浮按钮 ==========
+     * 切回其他模块时调用，恢复按钮显示
+     */
+    private void showAllFloatButtons() {
+        binding.btnStudy.setVisibility(View.VISIBLE);
+        binding.btnLife.setVisibility(View.VISIBLE);
+        binding.btnNav.setVisibility(View.VISIBLE);
+        binding.btnNotify.setVisibility(View.VISIBLE);
+        binding.btnMine.setVisibility(View.VISIBLE);
     }
 
     /**

@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- 新增：网络权限（必加，否则无法发起接口请求） -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 新增：Android 13+ 通知权限（解决权限异常） -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -20,6 +25,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- ========== 核心添加：注册详情页Activity ========== -->
+        <activity
+            android:name=".ui.notify.CollegeNotifyDetailActivity"
+            android:exported="false" />
+
+        <!-- 新增：注册ChatDetailActivity -->
+        <activity
+            android:name=".ui.notify.ChatDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".ui.notify.NoticeDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
+
+
 
 </manifest>
