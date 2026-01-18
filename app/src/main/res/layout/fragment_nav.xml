@@ -6,11 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".ui.nav.NavFragment">
 
-    <!-- 预留高德地图功能空间 -->
-    <FrameLayout
-        android:id="@+id/map_container"
+    <!-- 标题栏 -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_glass_card"
+        android:title="校园导航"
+        android:titleTextColor="@color/white"
+        android:elevation="8dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 高德地图视图 -->
+    <com.amap.api.maps.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- 校园POI列表 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/poi_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="8dp"
+        android:background="@color/gradient_mid"
+        android:elevation="8dp"
+        android:alpha="1.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_poi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

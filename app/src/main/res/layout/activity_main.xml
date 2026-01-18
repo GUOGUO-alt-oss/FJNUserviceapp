@@ -143,6 +143,7 @@
 
     <!-- 五边形布局的圆形按钮 -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttons_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp">

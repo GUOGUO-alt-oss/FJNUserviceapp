@@ -12,6 +12,7 @@
     <color name="gradient_mid">#FF203A43</color>   <!-- 极光蓝 -->
     <color name="gradient_end">#FF2C5364</color>   <!-- 星空紫蓝 -->
     <color name="light_blue">#F0F8FF</color>
+    <color name="primary_text">#000000</color>
 
     <!-- 强调色 -->
     <color name="neon_cyan">#FF00F2FE</color>      <!-- 霓虹青 -->

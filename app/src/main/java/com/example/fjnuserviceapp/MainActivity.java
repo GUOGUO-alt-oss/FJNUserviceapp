@@ -100,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding.btnNav.setOnClickListener(v -> {
             switchFragment(new NavFragment());
-            // ========== 新增：切回导航模块时显示所有悬浮按钮 ==========
-            showAllFloatButtons();
             playPressFeedback(v);
             updateCenterStatus("导航");
         });
@@ -352,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
      * ========== 新增方法：显示所有底部悬浮按钮 ==========
      * 切回其他模块时调用，恢复按钮显示
      */
-    private void showAllFloatButtons() {
+    public void showAllFloatButtons() {
         binding.btnStudy.setVisibility(View.VISIBLE);
         binding.btnLife.setVisibility(View.VISIBLE);
         binding.btnNav.setVisibility(View.VISIBLE);
@@ -508,11 +506,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             } else if (v == binding.btnLife) {
                 switchFragment(new LifeFragment());
-                showAllFloatButtons();
                 updateCenterStatus("生活");
             } else if (v == binding.btnNav) {
                 switchFragment(new NavFragment());
-                showAllFloatButtons();
                 updateCenterStatus("导航");
             } else if (v == binding.btnNotify) {
                 Intent intent = new Intent(MainActivity.this, NotifyActivity.class);
@@ -580,11 +576,47 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 切换Fragment
      */
-    private void switchFragment(androidx.fragment.app.Fragment fragment) {
+    /**
+     * 隐藏主页面元素（顶部Header、装饰圆形、粒子效果等）
+     */
+    private void hideMainPageElements() {
+        binding.topBar.setVisibility(View.GONE);
+        binding.decorCircleTopLeft.setVisibility(View.GONE);
+        binding.particleView.setVisibility(View.GONE);
+        binding.starView.setVisibility(View.GONE);
+        binding.sceneView.setVisibility(View.GONE);
+        binding.buttonsContainer.setVisibility(View.GONE);
+    }
+
+    /**
+     * 显示主页面元素（顶部Header、装饰圆形、粒子效果等）
+     */
+    private void showMainPageElements() {
+        binding.topBar.setVisibility(View.VISIBLE);
+        binding.decorCircleTopLeft.setVisibility(View.VISIBLE);
+        binding.particleView.setVisibility(View.VISIBLE);
+        binding.starView.setVisibility(View.VISIBLE);
+        binding.sceneView.setVisibility(View.GONE); // 保持隐藏，因为用户要求隐藏中间球体
+        binding.buttonsContainer.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 切换Fragment
+     */
+    public void switchFragment(androidx.fragment.app.Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
                 .commit();
+        
+        // 根据Fragment类型决定是否隐藏主页面元素
+        if (fragment instanceof NavFragment) {
+            hideMainPageElements();
+            hideAllFloatButtons();
+        } else {
+            showMainPageElements();
+            showAllFloatButtons();
+        }
     }
 
     private void playPressFeedback(View v) {

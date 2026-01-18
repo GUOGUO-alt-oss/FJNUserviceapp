@@ -71,4 +71,8 @@ dependencies {
 
     // 3D Sceneform (Maintained version)
     implementation("com.gorisse.thomas.sceneform:sceneform:1.23.0")
+    
+    // 高德地图SDK
+    implementation("com.amap.api:3dmap:9.7.0")
+    implementation("com.amap.api:search:9.7.0")
 }
