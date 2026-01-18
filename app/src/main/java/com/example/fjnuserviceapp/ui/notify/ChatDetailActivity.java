@@ -135,16 +135,15 @@ public class ChatDetailActivity extends AppCompatActivity {
             BaseMessage msg = msgList.get(position);
             if (msg == null || msg.getContent() == null) return;
 
-            holder.tvContent.setText(msg.getContent());
-            LinearLayout itemContainer = (LinearLayout) holder.itemView;
-
             // 区分消息位置
             if (msg.getSender() != null && msg.getSender().equals("我")) {
-                holder.tvContent.setBackgroundResource(R.drawable.bg_chat_me);
-                itemContainer.setGravity(Gravity.END);
+                holder.layoutRight.setVisibility(View.VISIBLE);
+                holder.layoutLeft.setVisibility(View.GONE);
+                holder.tvMsgRight.setText(msg.getContent());
             } else {
-                holder.tvContent.setBackgroundResource(R.drawable.bg_chat_other);
-                itemContainer.setGravity(Gravity.START);
+                holder.layoutRight.setVisibility(View.GONE);
+                holder.layoutLeft.setVisibility(View.VISIBLE);
+                holder.tvMsgLeft.setText(msg.getContent());
             }
         }
 
@@ -154,10 +153,15 @@ public class ChatDetailActivity extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            TextView tvContent;
+            LinearLayout layoutLeft, layoutRight;
+            TextView tvMsgLeft, tvMsgRight;
+
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
-                tvContent = itemView.findViewById(R.id.tvMsgContent);
+                layoutLeft = itemView.findViewById(R.id.layout_left);
+                layoutRight = itemView.findViewById(R.id.layout_right);
+                tvMsgLeft = itemView.findViewById(R.id.tv_msg_left);
+                tvMsgRight = itemView.findViewById(R.id.tv_msg_right);
             }
         }
     }

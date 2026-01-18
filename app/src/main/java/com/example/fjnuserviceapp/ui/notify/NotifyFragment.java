@@ -9,16 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.fjnuserviceapp.R;
 import com.example.fjnuserviceapp.databinding.FragmentNotifyBinding;
 import com.example.fjnuserviceapp.ui.notify.sub.CollegeNotifyFragment;
-import com.example.fjnuserviceapp.ui.notify.sub.MessageCenterFragment;
-// 核心修改1：导入新的联系人列表Fragment（替换原来的PrivateChatFragment）
 import com.example.fjnuserviceapp.ui.notify.sub.ContactListFragment;
-
-import com.google.android.material.tabs.TabLayout;
+import com.example.fjnuserviceapp.ui.notify.sub.MessageCenterFragment;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class NotifyFragment extends Fragment {
@@ -27,7 +22,6 @@ public class NotifyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // 初始化ViewBinding
         binding = FragmentNotifyBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -41,10 +35,8 @@ public class NotifyFragment extends Fragment {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                // 对应三个子Fragment
                 switch (position) {
                     case 0: return new CollegeNotifyFragment();
-                    // 核心修改2：把PrivateChatFragment换成ContactListFragment
                     case 1: return new ContactListFragment();
                     case 2: return new MessageCenterFragment();
                     default: return new CollegeNotifyFragment();
@@ -53,17 +45,26 @@ public class NotifyFragment extends Fragment {
 
             @Override
             public int getItemCount() {
-                return 3; // 三个Tab
+                return 3; 
             }
         });
 
-        // 2. 关联TabLayout和ViewPager2（标签文字不变，还是“私信”）
+        // 2. 关联TabLayout和ViewPager2
         new TabLayoutMediator(binding.tabLayout, binding.viewPager,
                 (tab, position) -> {
                     switch (position) {
-                        case 0: tab.setText("学院通知"); break;
-                        case 1: tab.setText("私信"); break; // 标签文字仍为“私信”
-                        case 2: tab.setText("消息中心"); break;
+                        case 0: 
+                            tab.setText("学院通知"); 
+                            tab.setIcon(android.R.drawable.ic_menu_info_details);
+                            break;
+                        case 1: 
+                            tab.setText("私信"); 
+                            tab.setIcon(android.R.drawable.ic_menu_send);
+                            break;
+                        case 2: 
+                            tab.setText("消息中心"); 
+                            tab.setIcon(android.R.drawable.ic_popup_reminder);
+                            break;
                     }
                 }).attach();
     }
@@ -71,7 +72,6 @@ public class NotifyFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // 清空Binding，避免内存泄漏
         binding = null;
     }
 }

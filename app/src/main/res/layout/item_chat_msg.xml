@@ -1,18 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 根布局改为LinearLayout（ViewGroup的子类，支持setGravity） -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp">
 
-    <TextView
-        android:id="@+id/tvMsgContent"
+    <!-- Left (Receiver) -->
+    <LinearLayout
+        android:id="@+id/layout_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_chat_other"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:maxWidth="240dp" />
+        android:orientation="horizontal"
+        android:layout_gravity="start"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_school_logo"
+            android:background="@drawable/bg_circle_glass"
+            android:padding="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_msg_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/bg_chat_bubble_left"
+            android:padding="10dp"
+            android:text="Hello"
+            android:textColor="#FFFFFF"
+            android:maxWidth="260dp"/>
+    </LinearLayout>
+
+    <!-- Right (Sender) -->
+    <LinearLayout
+        android:id="@+id/layout_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="end"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_msg_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/bg_chat_bubble_right"
+            android:padding="10dp"
+            android:text="Hi there"
+            android:textColor="#FFFFFF"
+            android:maxWidth="260dp"/>
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/default_avatar"
+            android:background="@drawable/bg_circle_glass"
+            android:padding="0dp"
+            android:scaleType="centerCrop"/>
+    </LinearLayout>
 
 </LinearLayout>

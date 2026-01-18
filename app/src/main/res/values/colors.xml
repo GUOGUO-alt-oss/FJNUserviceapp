@@ -7,8 +7,54 @@
     <color name="tertiary_color">#FFB00020</color>
     <color name="quaternary_color">#FF3700B3</color>
     <color name="quinary_color">#FF018786</color>
-    <color name="gradient_start">#8A00C8FF</color>
-    <color name="gradient_mid">#8A1E90FF</color>
-    <color name="gradient_end">#8A7B1FA2</color>
+    <!-- 未来感深色渐变 -->
+    <color name="gradient_start">#FF0F2027</color> <!-- 深邃蓝黑 -->
+    <color name="gradient_mid">#FF203A43</color>   <!-- 极光蓝 -->
+    <color name="gradient_end">#FF2C5364</color>   <!-- 星空紫蓝 -->
     <color name="light_blue">#F0F8FF</color>
+
+    <!-- 强调色 -->
+    <color name="neon_cyan">#FF00F2FE</color>      <!-- 霓虹青 -->
+    <color name="neon_purple">#FF4FACFE</color>    <!-- 霓虹紫 -->
+    
+    <!-- 莫兰迪色系 (保留用于次要元素) -->
+    <color name="morandi_blue">#5B7C99</color>
+    <color name="morandi_pink">#D8B4B8</color>
+    <color name="morandi_green">#8FA395</color>
+    <color name="morandi_grey">#9E9E9E</color>
+    <color name="morandi_purple">#B0A4E3</color>
+    
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#B3FFFFFF</color>
+    <color name="text_white_alpha">#CCFFFFFF</color>
+    
+    <!-- 毛玻璃背景色 -->
+    <color name="glass_bg">#1AFFFFFF</color>       <!-- 10%透明度白 -->
+    <color name="glass_stroke">#33FFFFFF</color>   <!-- 20%透明度白描边 -->
+    
+    <!-- 按钮功能色 (来自设计方案) -->
+    <color name="btn_study">#4A90E2</color>   <!-- 学识蓝 -->
+    <color name="btn_life">#F5A623</color>    <!-- 活力橙 -->
+    <color name="btn_nav">#2ECC71</color>     <!-- 探索绿 -->
+    <color name="btn_notify">#E74C3C</color>  <!-- 提醒红 -->
+    <color name="btn_mine">#9B59B6</color>    <!-- 个性紫 -->
+
+    <!-- 主按钮渐变色 (橙金) -->
+    <color name="btn_main_start">#FFD700</color>
+    <color name="btn_main_end">#FF8C00</color>
+
+    <!-- 个人主页花哨配色 -->
+    <color name="mine_bg_start">#FF0D0D1A</color> <!-- 深夜黑 -->
+    <color name="mine_bg_end">#FF1A1A2E</color>   <!-- 深紫黑 -->
+    <color name="neon_pink">#FFFF69B4</color>     <!-- 霓虹粉 -->
+    <color name="neon_blue">#FF00FFFF</color>     <!-- 霓虹蓝 -->
+    <color name="glass_card_bg">#1AFFFFFF</color> <!-- 卡片背景 -->
+    <color name="glass_card_stroke">#33FFFFFF</color> <!-- 卡片描边 -->
+
+    <!-- 新增：霓虹色系补充 -->
+    <color name="neon_green">#FF00E676</color>    <!-- 霓虹绿 -->
+    <color name="neon_orange">#FFFF9100</color>   <!-- 霓虹橙 -->
+    
+    <!-- 新增：文字颜色 -->
+    <color name="text_white_primary">#E6FFFFFF</color> <!-- 90% 白 -->
 </resources>

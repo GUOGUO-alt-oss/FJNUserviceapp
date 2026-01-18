@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 1. Outer Glow (Blurry Halo) -->
+    <item>
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="70%p"
+                android:startColor="#4064B5F6"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+
+    <!-- 2. Glass Body (Semi-transparent) -->
+    <item android:top="4dp" android:bottom="4dp" android:left="4dp" android:right="4dp">
+        <shape android:shape="oval">
+            <solid android:color="#33FFFFFF"/> <!-- 增强背景透明度 (原15% -> 20%) -->
+            <stroke
+                android:width="2dp"
+                android:color="#80FFFFFF"/> <!-- 增强描边亮度与宽度 (原30%/1dp -> 50%/2dp) -->
+        </shape>
+    </item>
+
+    <!-- 3. Inner Specular Highlight (Top-Left) -->
+    <item android:top="8dp" android:left="8dp" android:right="20dp" android:bottom="20dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="linear"
+                android:angle="315"
+                android:startColor="#40FFFFFF"
+                android:endColor="#00FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

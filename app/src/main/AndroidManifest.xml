@@ -41,6 +41,29 @@
             android:name=".ui.notify.NoticeDetailActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!-- 新增：注册 LearningActivity (学习模块独立页面) -->
+        <activity
+            android:name=".ui.study.LearningActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!-- 新增：注册 NotifyActivity (通知模块独立页面) -->
+        <activity
+            android:name=".ui.notify.NotifyActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!-- 新增：注册 MineActivity (个人模块独立页面) -->
+        <activity
+            android:name=".ui.chat.ChatActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.FJNUserviceapp" />
+        <activity
+            android:name=".ui.mine.MineActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 

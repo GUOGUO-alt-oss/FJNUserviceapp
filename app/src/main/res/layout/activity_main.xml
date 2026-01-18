@@ -23,20 +23,111 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/decor_circle_top_right"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/decor_circle"
-        android:alpha="0.2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- 顶部 Header 区域 (透明背景 + 毛玻璃) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="48dp"
+        android:paddingBottom="16dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <!-- 水面涟漪效果View -->
-    <com.example.fjnuserviceapp.ui.widget.WaterRippleView
-        android:id="@+id/water_ripple_view"
+        <!-- 左上角 Logo (带呼吸光晕) -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_school_logo"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_circle_glass"
+            android:elevation="4dp"
+            app:shapeAppearanceOverlay="@style/CircleImageStyle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- 欢迎语与通知卡片 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toEndOf="@id/iv_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tv_welcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="欢迎回来，浦颖昊"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- 校历提醒卡片 (浮动玻璃效果) -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:cardBackgroundColor="#26FFFFFF"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="6dp"
+                    android:paddingHorizontal="8dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@android:drawable/ic_menu_my_calendar"
+                        app:tint="@color/neon_cyan"
+                        android:layout_marginEnd="6dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_notification_marquee"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="今日校历提醒：课程表/考试/活动"
+                        android:textColor="@color/text_white_alpha"
+                        android:textSize="12sp"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true" />
+                        
+                    <!-- 小箭头提示 -->
+                    <ImageView
+                        android:id="@+id/iv_notification_arrow"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="@color/text_white_alpha"
+                        android:alpha="0.7"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- 粒子背景效果View -->
+    <com.example.fjnuserviceapp.ui.widget.ParticleView
+        android:id="@+id/particle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -56,6 +147,16 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
+        <!-- 3D Star Connection View (Behind buttons) -->
+        <com.example.fjnuserviceapp.ui.widget.StarView
+            android:id="@+id/star_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <!-- 中心点，用于定位 -->
         <View
             android:id="@+id/center_point"
@@ -67,115 +168,141 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- 1号按钮：学习（五边形顶部，0度） -->
+        <!-- 中心校徽 Logo (3D Sphere SceneView) -->
+        <com.google.ar.sceneform.SceneView
+            android:id="@+id/scene_view"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 1号按钮：学习 -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_study"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:backgroundTint="@android:color/transparent"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:background="@drawable/bg_button_glass_glow"
+            android:backgroundTint="@null"
             android:elevation="8dp"
             android:text="学习"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_white_primary"
             android:textSize="12sp"
-            app:cornerRadius="35dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            app:iconGravity="textTop"
+            app:iconPadding="4dp"
+            app:cornerRadius="42.5dp"
             app:icon="@drawable/ic_study"
-            app:iconTint="@android:color/white"
-            app:rippleColor="@android:color/white"
-            app:layout_constraintCircle="@id/center_point"
-            app:layout_constraintCircleAngle="0"
-            app:layout_constraintCircleRadius="80dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:iconTint="@color/neon_cyan"
+            app:rippleColor="@color/neon_cyan"
+            app:layout_constraintBottom_toBottomOf="@+id/center_point"
+            app:layout_constraintEnd_toEndOf="@+id/center_point"
+            app:layout_constraintStart_toStartOf="@+id/center_point"
+            app:layout_constraintTop_toTopOf="@+id/center_point" />
 
-        <!-- 2号按钮：生活（五边形右侧上，72度） -->
+        <!-- 2号按钮：生活 -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_life"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:backgroundTint="@android:color/transparent"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:background="@drawable/bg_button_glass_glow"
+            android:backgroundTint="@null"
             android:elevation="8dp"
             android:text="生活"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_white_primary"
             android:textSize="12sp"
-            app:cornerRadius="35dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            app:iconGravity="textTop"
+            app:iconPadding="4dp"
+            app:cornerRadius="42.5dp"
             app:icon="@drawable/ic_life"
-            app:iconTint="@android:color/white"
-            app:rippleColor="@android:color/white"
-            app:layout_constraintCircle="@id/center_point"
-            app:layout_constraintCircleAngle="72"
-            app:layout_constraintCircleRadius="80dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:iconTint="@color/neon_purple"
+            app:rippleColor="@color/neon_purple"
+            app:layout_constraintBottom_toBottomOf="@+id/center_point"
+            app:layout_constraintEnd_toEndOf="@+id/center_point"
+            app:layout_constraintStart_toStartOf="@+id/center_point"
+            app:layout_constraintTop_toTopOf="@+id/center_point" />
 
-        <!-- 3号按钮：导航（五边形右侧下，144度） -->
+        <!-- 3号按钮：导航 -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_nav"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:backgroundTint="@android:color/transparent"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:background="@drawable/bg_button_glass_glow"
+            android:backgroundTint="@null"
             android:elevation="8dp"
             android:text="导航"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_white_primary"
             android:textSize="12sp"
-            app:cornerRadius="35dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            app:iconGravity="textTop"
+            app:iconPadding="4dp"
+            app:cornerRadius="42.5dp"
             app:icon="@drawable/ic_nav"
-            app:iconTint="@android:color/white"
-            app:rippleColor="@android:color/white"
-            app:layout_constraintCircle="@id/center_point"
-            app:layout_constraintCircleAngle="144"
-            app:layout_constraintCircleRadius="80dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:iconTint="@color/neon_green"
+            app:rippleColor="@color/neon_green"
+            app:layout_constraintBottom_toBottomOf="@+id/center_point"
+            app:layout_constraintEnd_toEndOf="@+id/center_point"
+            app:layout_constraintStart_toStartOf="@+id/center_point"
+            app:layout_constraintTop_toTopOf="@+id/center_point" />
 
-        <!-- 4号按钮：通知（五边形左侧下，216度） -->
+        <!-- 4号按钮：通知 -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_notify"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:backgroundTint="@android:color/transparent"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:background="@drawable/bg_button_glass_glow"
+            android:backgroundTint="@null"
             android:elevation="8dp"
             android:text="通知"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_white_primary"
             android:textSize="12sp"
-            app:cornerRadius="35dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            app:iconGravity="textTop"
+            app:iconPadding="4dp"
+            app:cornerRadius="42.5dp"
             app:icon="@drawable/ic_notify"
-            app:iconTint="@android:color/white"
-            app:rippleColor="@android:color/white"
-            app:layout_constraintCircle="@id/center_point"
-            app:layout_constraintCircleAngle="216"
-            app:layout_constraintCircleRadius="80dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:iconTint="@color/neon_orange"
+            app:rippleColor="@color/neon_orange"
+            app:layout_constraintBottom_toBottomOf="@+id/center_point"
+            app:layout_constraintEnd_toEndOf="@+id/center_point"
+            app:layout_constraintStart_toStartOf="@+id/center_point"
+            app:layout_constraintTop_toTopOf="@+id/center_point" />
 
-        <!-- 5号按钮：我的（五边形左侧上，288度） -->
+        <!-- 5号按钮：我的 -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_mine"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:backgroundTint="@android:color/transparent"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:background="@drawable/bg_button_glass_glow"
+            android:backgroundTint="@null"
             android:elevation="8dp"
             android:text="我的"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_white_primary"
             android:textSize="12sp"
-            app:cornerRadius="35dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            app:iconGravity="textTop"
+            app:iconPadding="4dp"
+            app:cornerRadius="42.5dp"
             app:icon="@drawable/ic_mine"
-            app:iconTint="@android:color/white"
-            app:rippleColor="@android:color/white"
-            app:layout_constraintCircle="@id/center_point"
-            app:layout_constraintCircleAngle="288"
-            app:layout_constraintCircleRadius="80dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:iconTint="@color/neon_pink"
+            app:rippleColor="@color/neon_pink"
+            app:layout_constraintBottom_toBottomOf="@+id/center_point"
+            app:layout_constraintEnd_toEndOf="@+id/center_point"
+            app:layout_constraintStart_toStartOf="@+id/center_point"
+            app:layout_constraintTop_toTopOf="@+id/center_point" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

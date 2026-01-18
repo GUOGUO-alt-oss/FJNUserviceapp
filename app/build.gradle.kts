@@ -68,4 +68,7 @@ dependencies {
     // 新增：通知模块必需的2个依赖（ViewPager2 + RecyclerView）
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+
+    // 3D Sceneform (Maintained version)
+    implementation("com.gorisse.thomas.sceneform:sceneform:1.23.0")
 }
