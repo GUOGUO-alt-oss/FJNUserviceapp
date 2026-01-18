@@ -65,6 +65,36 @@
 
         <!-- 新增：注册 MineActivity (个人模块独立页面) -->
         <activity
+            android:name=".ui.life.LifeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        
+        <!-- 新增：注册 LostSearchActivity (失物招领查询页面) -->
+        <activity
+            android:name=".ui.life.detail.LostSearchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!-- 新增：注册 LostPublishActivity (失物招领发布页面) -->
+        <activity
+            android:name=".ui.life.detail.LostPublishActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!-- 新增：注册 IdlePublishActivity (闲置交易发布页面) -->
+        <activity
+            android:name=".ui.life.detail.IdlePublishActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!-- 注册 ChatActivity (生活模块聊天页面 - 注意包名修正) -->
+        <activity
+            android:name=".ui.life.detail.ChatActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.FJNUserviceapp" />
+
+        <activity
             android:name=".ui.chat.ChatActivity"
             android:exported="false"
             android:screenOrientation="portrait"

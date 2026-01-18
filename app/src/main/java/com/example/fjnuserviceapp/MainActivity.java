@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.fjnuserviceapp.R;
 import com.example.fjnuserviceapp.databinding.ActivityMainBinding;
+import com.example.fjnuserviceapp.ui.life.LifeActivity;
 import com.example.fjnuserviceapp.ui.life.LifeFragment;
 import com.example.fjnuserviceapp.ui.mine.MineActivity;
 import com.example.fjnuserviceapp.ui.mine.MineFragment;
@@ -72,12 +73,27 @@ public class MainActivity extends AppCompatActivity {
         init3DScene();
 
         // 默认显示生活Fragment (学习模块已改为独立Activity跳转)
+        // 核心修复：确保首页干净，移除可能残留的 Fragment
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new LifeFragment())
-                    .commit();
-            binding.getRoot().post(() -> updateCenterStatus("生活"));
+            // 如果是全新启动，不加载任何Fragment
+            androidx.fragment.app.Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            if (fragment != null) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        } else {
+            // 如果是状态恢复（如旋转屏幕），需要检查是否有不该显示的 Fragment
+            androidx.fragment.app.Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            if (fragment instanceof LifeFragment) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
         }
+        
+        // if (savedInstanceState == null) {
+        //     getSupportFragmentManager().beginTransaction()
+        //             .replace(R.id.fragment_container, new LifeFragment())
+        //             .commit();
+        //     binding.getRoot().post(() -> updateCenterStatus("生活"));
+        // }
 
         // 圆形按钮点击事件
         binding.btnStudy.setOnClickListener(v -> {
@@ -505,8 +521,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, LearningActivity.class);
                 startActivity(intent);
             } else if (v == binding.btnLife) {
-                switchFragment(new LifeFragment());
-                updateCenterStatus("生活");
+                Intent intent = new Intent(MainActivity.this, LifeActivity.class);
+                startActivity(intent);
+                // switchFragment(new LifeFragment());
+                // updateCenterStatus("生活");
             } else if (v == binding.btnNav) {
                 switchFragment(new NavFragment());
                 updateCenterStatus("导航");
@@ -591,7 +609,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 显示主页面元素（顶部Header、装饰圆形、粒子效果等）
      */
-    private void showMainPageElements() {
+    public void showMainPageElements() {
         binding.topBar.setVisibility(View.VISIBLE);
         binding.decorCircleTopLeft.setVisibility(View.VISIBLE);
         binding.particleView.setVisibility(View.VISIBLE);

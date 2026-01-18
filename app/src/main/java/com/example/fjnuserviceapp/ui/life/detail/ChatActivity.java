@@ -1,4 +1,4 @@
-package com.example.fjnuserviceapp.ui.life;
+package com.example.fjnuserviceapp.ui.life.detail;
 
 import android.os.Bundle; import android.text.TextUtils; import android.view.inputmethod.EditorInfo;
 import androidx.appcompat.app.AppCompatActivity; import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,8 +14,8 @@ public class ChatActivity extends AppCompatActivity {
         binding.tvTitle.setText(contactName == null ? "对方" : contactName);
         binding.btnBack.setOnClickListener(v -> finish());
         adapter = new ChatAdapter(messages);
-        binding.recycler.setLayoutManager(new LinearLayoutManager(this));
-        binding.recycler.setAdapter(adapter);
+        binding.recyclerChat.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerChat.setAdapter(adapter);
         addMsg("你好，我是 " + binding.tvTitle.getText(), false);
         addMsg("你好，我是我", true);
         binding.btnSend.setOnClickListener(v -> sendMsg());
@@ -27,11 +27,11 @@ public class ChatActivity extends AppCompatActivity {
         String text = binding.etInput.getText().toString().trim();
         if (TextUtils.isEmpty(text)) return;
         addMsg(text, true); binding.etInput.setText("");
-        binding.recycler.postDelayed(() -> addMsg("收到你的消息啦！", false), 1200);
+        binding.recyclerChat.postDelayed(() -> addMsg("收到你的消息啦！", false), 1200);
     }
     private void addMsg(String content, boolean isMe) {
         ChatMessage msg = new ChatMessage(); msg.setContent(content); msg.setMe(isMe);
         messages.add(msg); adapter.notifyItemInserted(messages.size() - 1);
-        binding.recycler.scrollToPosition(messages.size() - 1);
+        binding.recyclerChat.scrollToPosition(messages.size() - 1);
     }
 }

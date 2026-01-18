@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fjnuserviceapp.R;
 import com.example.fjnuserviceapp.base.entity.Contact;
-import com.example.fjnuserviceapp.ui.life.ChatActivity;
+import com.example.fjnuserviceapp.ui.life.detail.ChatActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
