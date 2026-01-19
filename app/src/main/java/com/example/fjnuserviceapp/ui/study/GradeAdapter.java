@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.fjnuserviceapp.databinding.ItemGradeBinding;
 import com.example.fjnuserviceapp.model.Grade;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.GradeViewHolder> {
@@ -13,7 +14,12 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.GradeViewHol
     private List<Grade> gradeList;
 
     public GradeAdapter(List<Grade> gradeList) {
-        this.gradeList = gradeList;
+        this.gradeList = gradeList == null ? new ArrayList<>() : gradeList;
+    }
+
+    public void updateGrades(List<Grade> newGrades) {
+        this.gradeList = newGrades == null ? new ArrayList<>() : newGrades;
+        notifyDataSetChanged();
     }
 
     @NonNull

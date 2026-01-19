@@ -50,6 +50,7 @@
     <color name="neon_pink">#FFFF69B4</color>     <!-- 霓虹粉 -->
     <color name="neon_blue">#FF00FFFF</color>     <!-- 霓虹蓝 -->
     <color name="glass_card_bg">#1AFFFFFF</color> <!-- 卡片背景 -->
+    <color name="glass_card_bg_active">#334FACFE</color> <!-- Active卡片背景 (紫色调高亮) -->
     <color name="glass_card_stroke">#33FFFFFF</color> <!-- 卡片描边 -->
 
     <!-- 新增：霓虹色系补充 -->

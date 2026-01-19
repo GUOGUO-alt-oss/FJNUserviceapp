@@ -17,7 +17,8 @@ public class StudyFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentStudyBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -32,30 +33,46 @@ public class StudyFragment extends Fragment {
             @Override
             public Fragment createFragment(int position) {
                 if (position == 0) {
+                    return new TodoFragment();
+                } else if (position == 1) {
                     return new ScheduleFragment();
-                } else {
+                } else if (position == 2) {
                     return new GradesFragment();
+                } else if (position == 3) {
+                    return new CountdownFragment();
+                } else {
+                    return new MindfulnessFragment();
                 }
             }
 
             @Override
             public int getItemCount() {
-                return 2;
+                return 5;
             }
         });
 
         // Setup Bottom Navigation (simulated with TabLayout for now or custom view)
         // actually, requirement says "Bottom navigation: Schedule, Grades"
-        // Let's use TabLayout at bottom or standard BottomNavigationView linked to ViewPager
-        
+        // Let's use TabLayout at bottom or standard BottomNavigationView linked to
+        // ViewPager
+
         // For simplicity and style, let's use TabLayout at the bottom
         new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) -> {
             if (position == 0) {
+                tab.setText("Todo");
+                tab.setIcon(android.R.drawable.ic_menu_edit);
+            } else if (position == 1) {
                 tab.setText("课程表");
                 tab.setIcon(android.R.drawable.ic_menu_agenda);
-            } else {
+            } else if (position == 2) {
                 tab.setText("成绩单");
                 tab.setIcon(android.R.drawable.ic_menu_my_calendar);
+            } else if (position == 3) {
+                tab.setText("倒计时");
+                tab.setIcon(android.R.drawable.ic_menu_recent_history);
+            } else {
+                tab.setText("正念");
+                tab.setIcon(android.R.drawable.ic_menu_view); // Use a generic icon or custom
             }
         }).attach();
     }

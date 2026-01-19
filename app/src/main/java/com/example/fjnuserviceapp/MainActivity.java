@@ -76,23 +76,25 @@ public class MainActivity extends AppCompatActivity {
         // 核心修复：确保首页干净，移除可能残留的 Fragment
         if (savedInstanceState == null) {
             // 如果是全新启动，不加载任何Fragment
-            androidx.fragment.app.Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            androidx.fragment.app.Fragment fragment = getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_container);
             if (fragment != null) {
                 getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
         } else {
             // 如果是状态恢复（如旋转屏幕），需要检查是否有不该显示的 Fragment
-            androidx.fragment.app.Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            androidx.fragment.app.Fragment fragment = getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_container);
             if (fragment instanceof LifeFragment) {
                 getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
         }
-        
+
         // if (savedInstanceState == null) {
-        //     getSupportFragmentManager().beginTransaction()
-        //             .replace(R.id.fragment_container, new LifeFragment())
-        //             .commit();
-        //     binding.getRoot().post(() -> updateCenterStatus("生活"));
+        // getSupportFragmentManager().beginTransaction()
+        // .replace(R.id.fragment_container, new LifeFragment())
+        // .commit();
+        // binding.getRoot().post(() -> updateCenterStatus("生活"));
         // }
 
         // 圆形按钮点击事件
@@ -161,6 +163,21 @@ public class MainActivity extends AppCompatActivity {
 
         // 初始化顶部 Header
         initHeader();
+
+        // 演示：模拟通知模块有新消息时的脉冲提醒
+        binding.btnNotify.postDelayed(() -> {
+            ObjectAnimator scaleX = ObjectAnimator.ofFloat(binding.btnNotify, "scaleX", 1.0f, 1.2f, 1.0f);
+            scaleX.setDuration(500);
+            scaleX.setRepeatCount(3);
+
+            ObjectAnimator scaleY = ObjectAnimator.ofFloat(binding.btnNotify, "scaleY", 1.0f, 1.2f, 1.0f);
+            scaleY.setDuration(500);
+            scaleY.setRepeatCount(3);
+
+            AnimatorSet set = new AnimatorSet();
+            set.playTogether(scaleX, scaleY);
+            set.start();
+        }, 2000);
     }
 
     private void init3DScene() {
@@ -385,12 +402,22 @@ public class MainActivity extends AppCompatActivity {
     private float touchLastX = 0f;
     private float flingVelocity = 0f;
     private ValueAnimator inertiaAnimator; // 惯性动画
+    private float entryScale = 0f; // 入场动画缩放因子
 
     // 启动旋转动画
     private void startButtonAnimations() {
         if (rotationAnimator != null && rotationAnimator.isRunning()) {
             return;
         }
+
+        // 入场动画：从中心散开
+        ValueAnimator entryAnimator = ValueAnimator.ofFloat(0f, 1f);
+        entryAnimator.setDuration(1200);
+        entryAnimator.setInterpolator(new android.view.animation.OvershootInterpolator());
+        entryAnimator.addUpdateListener(animation -> {
+            entryScale = (float) animation.getAnimatedValue();
+        });
+        entryAnimator.start();
 
         final View[] buttons = {
                 binding.btnStudy,
@@ -436,6 +463,14 @@ public class MainActivity extends AppCompatActivity {
             // 叠加手动拖拽的偏移量
             float totalRotation = animatedValue + currentRotationOffset;
 
+            // Parallax Effect (视差滚动)：背景粒子随旋转微动
+            if (binding.particleView != null) {
+                float parallaxX = (float) (Math.sin(Math.toRadians(totalRotation)) * 30);
+                float parallaxY = (float) (Math.cos(Math.toRadians(totalRotation)) * 20);
+                binding.particleView.setTranslationX(parallaxX);
+                binding.particleView.setTranslationY(parallaxY);
+            }
+
             for (int i = 0; i < count; i++) {
                 // 1. 初始平面圆周运动 (XY平面)
                 float currentAngle = i * angleStep + totalRotation;
@@ -461,15 +496,20 @@ public class MainActivity extends AppCompatActivity {
                 float alpha = (float) (0.7 + (zNormalized + 1) * 0.15);
                 float elevation = (float) (10 + (zNormalized * 10));
 
-                buttons[i].setTranslationX((float) x2);
-                buttons[i].setTranslationY((float) y2);
-                buttons[i].setScaleX(scale);
-                buttons[i].setScaleY(scale);
-                buttons[i].setAlpha(alpha);
+                // 应用入场动画缩放 (Entry Scale)
+                float finalScale = scale * entryScale;
+                double x2_scaled = x2 * entryScale;
+                double y2_scaled = y2 * entryScale;
+
+                buttons[i].setTranslationX((float) x2_scaled);
+                buttons[i].setTranslationY((float) y2_scaled);
+                buttons[i].setScaleX(finalScale);
+                buttons[i].setScaleY(finalScale);
+                buttons[i].setAlpha(alpha * (0.5f + 0.5f * entryScale)); // Alpha 也随入场渐变
                 buttons[i].setElevation(elevation);
 
-                vertices.set(i * 2, (float) x2);
-                vertices.set(i * 2 + 1, (float) y2);
+                vertices.set(i * 2, (float) x2_scaled);
+                vertices.set(i * 2 + 1, (float) y2_scaled);
             }
 
             if (starView != null) {
@@ -626,7 +666,7 @@ public class MainActivity extends AppCompatActivity {
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
                 .commit();
-        
+
         // 根据Fragment类型决定是否隐藏主页面元素
         if (fragment instanceof NavFragment) {
             hideMainPageElements();
