@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/neon_cyan"
         android:background="@drawable/bg_poi_type_tag"
         android:paddingHorizontal="8dp"
         android:paddingVertical="2dp"
