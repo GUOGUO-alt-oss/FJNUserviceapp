@@ -10,7 +10,6 @@
         android:layout_width="48dp"
         android:layout_height="match_parent"
         android:padding="12dp"
-        android:src="@drawable/ic_arrow_left"
         android:background="@android:color/transparent"
         android:tint="@android:color/white" />
 

@@ -56,10 +56,11 @@
     <!-- 新增：霓虹色系补充 -->
     <color name="neon_green">#FF00E676</color>    <!-- 霓虹绿 -->
     <color name="neon_orange">#FFFF9100</color>   <!-- 霓虹橙 -->
+    <color name="neon_red">#FFFF4757</color>      <!-- 霓虹红 -->
+    
+    <!-- 基础颜色 -->
+    <color name="transparent">#00000000</color>    <!-- 透明色 -->
     
     <!-- 新增：文字颜色 -->
     <color name="text_white_primary">#E6FFFFFF</color> <!-- 90% 白 -->
-    
-    <!-- Holo Colors (Missing in public Android resources) -->
-    <color name="holo_purple">#FFaa66cc</color>
 </resources>

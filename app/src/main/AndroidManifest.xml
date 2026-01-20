@@ -103,8 +103,12 @@
             android:name=".ui.mine.MineActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        
+        <!-- 新增：注册登录注册相关Activity -->
+        <activity
+            android:name=".auth.ui.AuthActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FJNUserviceapp" />
     </application>
-
-
 
 </manifest>

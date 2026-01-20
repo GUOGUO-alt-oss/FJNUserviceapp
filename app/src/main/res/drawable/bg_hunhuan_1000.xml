@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 光晕层 -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#409B59B6" />
+            <corners android:radius="50dp" />
+        </shape>
+    </item>
+    
+    <!-- 魂环主体 -->
+    <item android:top="5dp" android:left="5dp" android:right="5dp" android:bottom="5dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="#FF9B59B6"
+                android:centerColor="#FF8E44AD"
+                android:endColor="#FF6C3483" />
+            <corners android:radius="45dp" />
+            <stroke 
+                android:width="3dp" 
+                android:color="#FFFFFFFF" 
+                android:alpha="0.8" />
+        </shape>
+    </item>
+    
+    <!-- 魂环纹路 -->
+    <item 
+        android:top="5dp" 
+        android:left="5dp" 
+        android:right="5dp" 
+        android:bottom="5dp"
+        android:drawable="@drawable/ic_hunhuan_pattern"
+        android:alpha="0.5" />
+</layer-list>

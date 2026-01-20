@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 黑色魂环通常带有暗红色或暗紫色的气场 -->
+    <item>
+        <shape android:shape="ring"
+            android:thickness="14dp"
+            android:useLevel="false">
+            <gradient
+                android:type="sweep"
+                android:startColor="#00000000"
+                android:centerColor="#60000000"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+
+    <!-- 主体环 (黑曜石质感) -->
+    <item>
+        <shape android:shape="ring"
+            android:thickness="9dp"
+            android:useLevel="false">
+            <gradient
+                android:type="sweep"
+                android:startColor="#FF000000"
+                android:centerColor="#FF444444"
+                android:endColor="#FF111111" />
+            <stroke
+                android:width="0.5dp"
+                android:color="#80FFFFFF" />
+        </shape>
+    </item>
+    
+    <!-- 纹理叠加 -->
+    <item android:drawable="@drawable/ic_hunhuan_pattern_black" />
+</layer-list>

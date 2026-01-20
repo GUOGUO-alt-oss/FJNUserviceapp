@@ -1,7 +1,6 @@
 package com.example.fjnuserviceapp.ui.widget;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,12 +79,5 @@ public class CommonTitleBar extends FrameLayout {
         binding.ivRight.setImageResource(resId);
         binding.ivRight.setVisibility(VISIBLE);
         binding.tvRight.setVisibility(GONE);
-    }
-
-    /**
-     * 设置背景透明（用于沉浸式页面）
-     */
-    public void setTransparent() {
-        binding.getRoot().setBackgroundColor(Color.TRANSPARENT);
     }
 }

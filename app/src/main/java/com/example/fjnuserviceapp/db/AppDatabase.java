@@ -10,17 +10,26 @@ import com.example.fjnuserviceapp.model.UserProfile;
 import com.example.fjnuserviceapp.model.TodoItem;
 import com.example.fjnuserviceapp.model.CountdownEvent;
 import com.example.fjnuserviceapp.model.MindfulnessRecord;
+import com.example.fjnuserviceapp.auth.data.model.User;
+import com.example.fjnuserviceapp.auth.data.model.UserToken;
+import com.example.fjnuserviceapp.auth.data.model.VerificationCode;
+import com.example.fjnuserviceapp.auth.data.local.UserTokenDao;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = { Course.class, Grade.class, UserProfile.class, TodoItem.class, CountdownEvent.class,
-        MindfulnessRecord.class }, version = 7, exportSchema = false)
+        MindfulnessRecord.class, User.class, UserToken.class, VerificationCode.class }, version = 8, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CourseDao courseDao();
 
     public abstract GradeDao gradeDao();
 
     public abstract UserDao userDao();
+    
+    public abstract com.example.fjnuserviceapp.auth.data.local.UserDao authUserDao();
+    
+    public abstract UserTokenDao userTokenDao();
 
     public abstract TodoDao todoDao();
 

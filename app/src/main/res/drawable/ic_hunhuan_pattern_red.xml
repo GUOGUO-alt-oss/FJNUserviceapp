@@ -1,0 +1,53 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    
+    <!-- 十万年魂环：极其复杂的法阵纹路，尊贵且霸气 -->
+    
+    <!-- 核心六芒星结构 -->
+    <path
+        android:pathData="M100,20 L170,140 L30,140 Z"
+        android:strokeColor="#60FFFFFF"
+        android:strokeWidth="1"
+        android:fillColor="#00000000"/>
+    <path
+        android:pathData="M100,180 L170,60 L30,60 Z"
+        android:strokeColor="#60FFFFFF"
+        android:strokeWidth="1"
+        android:fillColor="#00000000"/>
+
+    <!-- 外部复杂花纹 -->
+    <path
+        android:pathData="M100,10 Q145,10 190,55 Q190,100 190,100 Q190,145 145,190 Q100,190 100,190 Q55,190 10,145 Q10,100 10,100 Q10,55 55,10 Q100,10 100,10"
+        android:strokeColor="#50FFD700" 
+        android:strokeWidth="2"
+        android:fillColor="#00000000"/>
+
+    <!-- 内部装饰圆点 -->
+    <group>
+        <path android:pathData="M100,30 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" android:fillColor="#80FFFFFF"/>
+        <path android:pathData="M100,170 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" android:fillColor="#80FFFFFF"/>
+        <path android:pathData="M39,65 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" android:fillColor="#80FFFFFF"/>
+        <path android:pathData="M161,65 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" android:fillColor="#80FFFFFF"/>
+        <path android:pathData="M39,135 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" android:fillColor="#80FFFFFF"/>
+        <path android:pathData="M161,135 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" android:fillColor="#80FFFFFF"/>
+    </group>
+
+    <!-- 中心符文 -->
+    <path
+        android:pathData="M100,80 L110,90 L100,100 L90,90 Z"
+        android:fillColor="#A0FFFFFF" />
+    <path
+        android:pathData="M100,70 L100,130 M70,100 L130,100"
+        android:strokeColor="#80FFFFFF"
+        android:strokeWidth="1" />
+        
+    <!-- 环绕铭文圈 -->
+    <path
+        android:pathData="M100,100 m-90,0 a90,90 0 1,0 180,0 a90,90 0 1,0 -180,0"
+        android:strokeColor="#40FFD700"
+        android:strokeWidth="1"
+        android:fillColor="#00000000"/>
+</vector>
