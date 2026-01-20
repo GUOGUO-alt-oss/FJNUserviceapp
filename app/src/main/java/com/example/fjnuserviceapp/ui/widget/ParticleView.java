@@ -15,6 +15,7 @@ import java.util.Random;
 /**
  * 粒子背景View
  * 显示缓慢移动的半透明粒子
+ * Enhanced for MinePage: Supports Parallax Scrolling
  */
 public class ParticleView extends View {
 
@@ -28,7 +29,7 @@ public class ParticleView extends View {
         float currentAlpha;
         float alphaOffset; // Random offset for blink cycle
         int color;
-        int layer; // 0: Background (Small, Slow), 1: Midground, 2: Foreground (Large, Fast)
+        int layer; // 0: Background (Far), 1: Midground, 2: Foreground (Near)
 
         public Particle(float w, float h, Random random) {
             this.x = random.nextFloat() * w;
@@ -37,22 +38,22 @@ public class ParticleView extends View {
             this.alphaOffset = random.nextFloat() * 1000;
 
             switch (layer) {
-                case 0: // Far: Small, Dark, Fast (Depth parallax)
+                case 0: // Far: Small, Dark, Slow (Depth parallax)
                     this.radius = 1f + random.nextFloat();
-                    this.speedX = (random.nextFloat() - 0.5f) * 0.3f;
-                    this.speedY = (random.nextFloat() - 0.5f) * 0.3f;
+                    this.speedX = (random.nextFloat() - 0.5f) * 0.1f;
+                    this.speedY = (random.nextFloat() - 0.5f) * 0.1f;
                     this.baseAlpha = 0.3f;
                     break;
                 case 1: // Mid: Medium
                     this.radius = 2f + random.nextFloat();
-                    this.speedX = (random.nextFloat() - 0.5f) * 0.6f;
-                    this.speedY = (random.nextFloat() - 0.5f) * 0.6f;
+                    this.speedX = (random.nextFloat() - 0.5f) * 0.3f;
+                    this.speedY = (random.nextFloat() - 0.5f) * 0.3f;
                     this.baseAlpha = 0.5f;
                     break;
-                case 2: // Near: Large, Bright, Slow (Focus)
+                case 2: // Near: Large, Bright, Faster (Focus)
                     this.radius = 3f + random.nextFloat() * 2;
-                    this.speedX = (random.nextFloat() - 0.5f) * 0.9f;
-                    this.speedY = (random.nextFloat() - 0.5f) * 0.9f;
+                    this.speedX = (random.nextFloat() - 0.5f) * 0.5f;
+                    this.speedY = (random.nextFloat() - 0.5f) * 0.5f;
                     this.baseAlpha = 0.7f;
                     break;
             }
@@ -69,7 +70,10 @@ public class ParticleView extends View {
     private final List<Particle> particles = new ArrayList<>();
     private Paint paint;
     private final Random random = new Random();
-    private static final int PARTICLE_COUNT = 80; // Increased count for layers
+    private static final int PARTICLE_COUNT = 100;
+
+    // Parallax
+    private float scrollOffsetY = 0;
 
     public ParticleView(Context context) {
         super(context);
@@ -92,6 +96,12 @@ public class ParticleView extends View {
         paint.setStyle(Paint.Style.FILL);
     }
 
+    public void setScrollOffset(float dy) {
+        this.scrollOffsetY = dy;
+        // Do NOT invalidate here to avoid excessive redraws on scroll.
+        // The animation loop handles the redraw.
+    }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -110,11 +120,31 @@ public class ParticleView extends View {
         long time = System.currentTimeMillis();
 
         for (Particle p : particles) {
-            // Update position
+            // Update position (Drift)
             p.x += p.speedX;
             p.y += p.speedY;
 
-            // Bounce off edges (Wrap around for infinite space effect)
+            // Apply Parallax based on layer
+            // Layer 0 (Far): Moves slowly with scroll (0.1)
+            // Layer 1 (Mid): Moves moderate (0.3)
+            // Layer 2 (Near): Moves fast (0.5)
+            // We SUBTRACT offset to simulate depth (background moves slower than foreground
+            // content)
+            float parallaxY = 0;
+            if (layerParallaxEnabled) {
+                float factor = (p.layer + 1) * 0.15f;
+                parallaxY = scrollOffsetY * factor;
+            }
+
+            float drawX = p.x;
+            float drawY = p.y - parallaxY; // Move particles up as we scroll down? Or opposite?
+            // Usually if we scroll down (content moves up), background should move up
+            // SLOWER.
+            // ScrollView scrollY increases as we go down.
+            // So if scrollY = 100, content is at -100.
+            // Background should be at -100 * factor.
+
+            // Wrap logic needs to handle the base x/y, not the drawn x/y
             if (p.x < -p.radius)
                 p.x = w + p.radius;
             if (p.x > w + p.radius)
@@ -124,20 +154,24 @@ public class ParticleView extends View {
             if (p.y > h + p.radius)
                 p.y = -p.radius;
 
-            // Blink Animation (Sine wave)
-            // Cycle: 2-5 seconds
-            float blinkFactor = (float) Math.sin((time + p.alphaOffset) / 500.0); // -1 to 1
-            // Map -1..1 to -0.2..0.2 offset
+            // Blink Animation
+            float blinkFactor = (float) Math.sin((time + p.alphaOffset) / 500.0);
             float alphaChange = blinkFactor * 0.2f;
             p.currentAlpha = Math.max(0.1f, Math.min(1.0f, p.baseAlpha + alphaChange));
 
-            // Draw
             paint.setColor(p.color);
             paint.setAlpha((int) (p.currentAlpha * 255));
-            canvas.drawCircle(p.x, p.y, p.radius, paint);
+
+            // Handle wrapping for drawY due to parallax?
+            // Simple approach: Just draw. If it goes off screen due to parallax, it's fine.
+            // The Drift wrap handles the infinite field. Parallax just shifts the view
+            // window.
+
+            canvas.drawCircle(drawX, drawY, p.radius, paint);
         }
 
-        // Animate
         invalidate();
     }
+
+    private boolean layerParallaxEnabled = true;
 }

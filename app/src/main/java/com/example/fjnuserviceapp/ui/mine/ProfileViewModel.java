@@ -16,6 +16,8 @@ import com.example.fjnuserviceapp.model.UserProfile;
 import java.util.Calendar;
 import java.util.List;
 
+import com.example.fjnuserviceapp.ui.mine.engine.IdentityEngine;
+
 public class ProfileViewModel extends AndroidViewModel {
     private final UserDao userDao;
     private final CourseDao courseDao;
@@ -23,6 +25,7 @@ public class ProfileViewModel extends AndroidViewModel {
 
     private final LiveData<UserProfile> userProfile;
     private final MediatorLiveData<ProfileStats> stats = new MediatorLiveData<>();
+    private final IdentityEngine identityEngine; // Add Engine
 
     public ProfileViewModel(@NonNull Application application) {
         super(application);
@@ -30,6 +33,8 @@ public class ProfileViewModel extends AndroidViewModel {
         userDao = db.userDao();
         courseDao = db.courseDao();
         gradeDao = db.gradeDao();
+
+        identityEngine = IdentityEngine.getInstance(); // Get Instance
 
         userProfile = userDao.getUserProfile();
 
@@ -44,11 +49,19 @@ public class ProfileViewModel extends AndroidViewModel {
         initializeDefaultUser();
     }
 
+    public LiveData<IdentityEngine.IdentityState> getIdentityState() {
+        return identityEngine.getIdentityState();
+    }
+
+    public void switchIdentityMode(IdentityEngine.IdentityMode mode) {
+        identityEngine.switchMode(mode);
+    }
+
     private void initializeDefaultUser() {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             if (userDao.getUserProfileSync() == null) {
                 // 插入示例数据
-                userDao.insert(new UserProfile("李华", "22010101", "计算机学院", "软件工程"));
+                userDao.insert(new UserProfile("浦颖昊", "22010101", "计算机学院", "软件工程"));
             }
         });
     }
