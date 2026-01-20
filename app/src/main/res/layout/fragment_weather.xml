@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".ui.weather.WeatherFragment">
+
+    <!-- 顶部Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_glass_card"
+        android:elevation="8dp"
+        android:minHeight="?attr/actionBarSize"
+        android:title="天气预报"
+        android:titleTextColor="@color/neon_purple"
+        android:titleMarginStart="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+        
+        <!-- 明显的返回按钮 -->
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/btn_back_shape"
+            android:text="返回"
+            android:textColor="@color/gradient_start"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="8dp"
+            android:elevation="4dp" />
+            
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- 当前天气卡片 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_current_weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="8dp"
+        app:cardBackgroundColor="@color/glass_card_bg"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- 位置信息 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="当前地区:"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="16sp" />
+                
+                <Spinner
+                    android:id="@+id/spinner_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/spinner_bg"
+                    android:popupBackground="@drawable/bg_glass_card"
+                    android:textColor="@color/neon_cyan"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- 日期 -->
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                tools:text="2026年1月20日 周一" />
+
+            <!-- 当前温度 -->
+            <TextView
+                android:id="@+id/tv_current_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/neon_cyan"
+                android:textSize="96sp"
+                android:textStyle="bold"
+                tools:text="22°" />
+
+            <!-- 天气状况 -->
+            <TextView
+                android:id="@+id/tv_weather_condition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/text_primary"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="晴" />
+
+            <!-- 温度范围 -->
+            <TextView
+                android:id="@+id/tv_temperature_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp"
+                tools:text="12° - 25°" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 未来天气预报标题 -->
+    <TextView
+        android:id="@+id/tv_forecast_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="未来5天预报"
+        android:textColor="@color/text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_current_weather" />
+
+    <!-- 天气预报列表 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_weather_forecast"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_glass_card"
+        android:elevation="8dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_forecast_title"
+        tools:listitem="@layout/item_weather" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 自定义Spinner列表项布局 -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:textColor="@color/neon_cyan"
+    android:textSize="16sp"
+    android:textStyle="normal" />
+<!-- 使用明亮的霓虹青色文字，确保与背景有良好对比度 -->
