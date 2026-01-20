@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/gradient_background"> <!-- 核心：添加渐变背景 -->
+    android:padding="16dp">
 
-    <!-- 返回按钮（保留原有样式，适配渐变背景） -->
+    <!-- 返回按钮 -->
     <Button
         android:id="@+id/btnNoticeBack"
         android:layout_width="wrap_content"
@@ -15,7 +14,7 @@
         android:background="#6C63FF"
         android:textColor="#FFFFFF"/>
 
-    <!-- 通知标题（文字改为白色，适配渐变背景） -->
+    <!-- 通知标题 -->
     <TextView
         android:id="@+id/tvNoticeTitle"
         android:layout_width="match_parent"
@@ -23,10 +22,9 @@
         android:text="无标题"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
-    android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"/>
 
-    <!-- 发布者+时间（文字改为浅白色，适配渐变背景） -->
+    <!-- 发布者+时间 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,25 +36,24 @@
             android:layout_height="wrap_content"
             android:text="发布者：未知发布者"
             android:textSize="12sp"
-            android:textColor="#E0E0E0"/> <!-- 修改：浅白色替代灰色 -->
+            android:textColor="#999999"/>
         <TextView
             android:id="@+id/tvNoticeTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2026-01-06 08:41:13"
             android:textSize="12sp"
-            android:textColor="#E0E0E0"
-        android:layout_marginStart="16dp"/>
+            android:textColor="#999999"
+            android:layout_marginStart="16dp"/>
     </LinearLayout>
 
-    <!-- 通知内容（文字改为白色，适配渐变背景） -->
+    <!-- 通知内容 -->
     <TextView
         android:id="@+id/tvNoticeContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="无内容"
         android:textSize="16sp"
-        android:textColor="#FFFFFF"
-    android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"/>
 
 </LinearLayout>
