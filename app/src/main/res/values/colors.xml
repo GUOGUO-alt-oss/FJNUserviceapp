@@ -63,4 +63,5 @@
     
     <!-- 新增：文字颜色 -->
     <color name="text_white_primary">#E6FFFFFF</color> <!-- 90% 白 -->
+    <color name="holo_purple">#FF9933CC</color>
 </resources>

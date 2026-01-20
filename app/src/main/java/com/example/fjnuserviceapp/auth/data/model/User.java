@@ -6,9 +6,9 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "users", indices = {
-        @Index(value = {"phone"}, unique = true),
-        @Index(value = {"email"}, unique = true),
-        @Index(value = {"student_id"}, unique = true)
+        @Index(value = { "phone" }, unique = true),
+        @Index(value = { "email" }, unique = true),
+        @Index(value = { "student_id" }, unique = true)
 })
 public class User {
     @PrimaryKey(autoGenerate = true)
@@ -28,13 +28,13 @@ public class User {
 
     private String salt;
     private String nickname;
-    
+
     @ColumnInfo(name = "real_name")
     private String realName;
-    
+
     @ColumnInfo(name = "avatar_url")
     private String avatarUrl;
-    
+
     private String department;
     private String major;
     private int gender; // 0:未知, 1:男, 2:女
@@ -57,6 +57,7 @@ public class User {
     }
 
     // 带参构造方法
+    @androidx.room.Ignore
     public User(String nickname, String studentId, String department, String major) {
         this.nickname = nickname;
         this.studentId = studentId;
