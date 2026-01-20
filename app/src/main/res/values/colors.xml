@@ -59,4 +59,7 @@
     
     <!-- 新增：文字颜色 -->
     <color name="text_white_primary">#E6FFFFFF</color> <!-- 90% 白 -->
+    
+    <!-- Holo Colors (Missing in public Android resources) -->
+    <color name="holo_purple">#FFaa66cc</color>
 </resources>
