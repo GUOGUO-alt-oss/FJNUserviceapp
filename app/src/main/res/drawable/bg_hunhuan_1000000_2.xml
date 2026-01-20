@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 金色光芒扩散层 -->
+    <item>
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:startColor="#A0FFD700"
+                android:endColor="#00FFD700"
+                android:gradientRadius="80dp" />
+            <corners android:radius="50dp" />
+        </shape>
+    </item>
+    
+    <!-- 魂环主体 -->
+    <item android:top="5dp" android:left="5dp" android:right="5dp" android:bottom="5dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="linear"
+                android:angle="180"
+                android:startColor="#FFFF8C00"
+                android:centerColor="#FFFF4500"
+                android:endColor="#FFFFD700" />
+            <corners android:radius="45dp" />
+            <stroke 
+                android:width="5dp" 
+                android:color="#FFFFFFFF" 
+                android:alpha="1.0" />
+        </shape>
+    </item>
+    
+    <!-- 魂环纹路 -->
+    <item 
+        android:top="5dp" 
+        android:left="5dp" 
+        android:right="5dp" 
+        android:bottom="5dp"
+        android:drawable="@drawable/ic_hunhuan_pattern"
+        android:alpha="1.0" />
+    
+    <!-- 金色光晕外层 -->
+    <item>
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:startColor="#40FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:gradientRadius="70dp" />
+            <corners android:radius="50dp" />
+        </shape>
+    </item>
+</layer-list>

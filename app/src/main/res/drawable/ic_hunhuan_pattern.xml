@@ -1,0 +1,36 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    
+    <!-- 复杂的符文纹路 -->
+    <path
+        android:pathData="M100,10 A90,90 0 1 0 100,190 A90,90 0 1 0 100,10 Z"
+        android:strokeColor="#40FFFFFF"
+        android:strokeWidth="1"
+        android:strokeAlpha="0.3"
+        android:fillColor="#00000000"/>
+
+    <path
+        android:pathData="M100,20 L110,30 L100,40 L90,30 Z M100,160 L110,170 L100,180 L90,170 Z M20,100 L30,110 L40,100 L30,90 Z M160,100 L170,110 L180,100 L170,90 Z"
+        android:fillColor="#80FFFFFF" />
+        
+    <path
+        android:pathData="M100,50 Q150,50 150,100 T100,150 T50,100 T100,50"
+        android:strokeColor="#60FFFFFF"
+        android:strokeWidth="2"
+        android:fillColor="#00000000" />
+        
+    <!-- 增加更多细节 -->
+    <group android:rotation="45" android:pivotX="100" android:pivotY="100">
+        <path
+            android:pathData="M100,30 L100,170"
+            android:strokeColor="#30FFFFFF"
+            android:strokeWidth="1" />
+        <path
+            android:pathData="M30,100 L170,100"
+            android:strokeColor="#30FFFFFF"
+            android:strokeWidth="1" />
+    </group>
+</vector>

@@ -75,4 +75,7 @@ dependencies {
     // 高德地图SDK
     implementation("com.amap.api:3dmap:9.7.0")
     implementation("com.amap.api:search:9.7.0")
+
+    // Security
+    implementation("androidx.security:security-crypto:1.0.0")
 }

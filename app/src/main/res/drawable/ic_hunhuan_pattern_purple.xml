@@ -1,0 +1,44 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    
+    <!-- 千年魂环：流动的曲线纹路，增加神秘感 -->
+    
+    <!-- 螺旋曲线 -->
+    <path
+        android:pathData="M100,10 Q150,10 180,50 T190,100 T150,180 T50,180 T10,100 T50,20 T100,10"
+        android:strokeColor="#50FFFFFF"
+        android:strokeWidth="2"
+        android:strokeAlpha="0.3"
+        android:fillColor="#00000000"/>
+
+    <!-- 波浪纹 -->
+    <path
+        android:pathData="M30,100 Q65,60 100,100 T170,100"
+        android:strokeColor="#40FFFFFF"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000"/>
+    <path
+        android:pathData="M30,100 Q65,140 100,100 T170,100"
+        android:strokeColor="#40FFFFFF"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000"/>
+
+    <!-- 神秘眼状符号 -->
+    <path
+        android:pathData="M100,40 Q120,40 130,50 Q120,60 100,60 Q80,60 70,50 Q80,40 100,40"
+        android:fillColor="#40FFFFFF" />
+    <path
+        android:pathData="M100,160 Q120,160 130,150 Q120,140 100,140 Q80,140 70,150 Q80,160 100,160"
+        android:fillColor="#40FFFFFF" />
+
+    <!-- 侧边装饰 -->
+    <path
+        android:pathData="M40,100 L20,90 L20,110 Z"
+        android:fillColor="#60FFFFFF" />
+    <path
+        android:pathData="M160,100 L180,90 L180,110 Z"
+        android:fillColor="#60FFFFFF" />
+</vector>

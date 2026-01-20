@@ -29,6 +29,9 @@ import com.example.fjnuserviceapp.utils.AnimationUtils;
 import com.example.fjnuserviceapp.utils.BlurUtils;
 
 // 新增权限请求码（常量）
+import com.example.fjnuserviceapp.auth.ui.AuthActivity;
+import com.example.fjnuserviceapp.auth.manager.SessionManager;
+import com.example.fjnuserviceapp.auth.manager.TokenManager;
 import com.google.ar.sceneform.SceneView;
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
@@ -53,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check Login Status
+        TokenManager tokenManager = new TokenManager(this);
+        SessionManager sessionManager = SessionManager.getInstance(tokenManager);
+        if (!sessionManager.isLoggedIn()) {
+            navigateToAuth();
+            return;
+        }
 
         // 新增：Android 13+ 动态申请通知权限（核心修改）
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -178,6 +189,12 @@ public class MainActivity extends AppCompatActivity {
             set.playTogether(scaleX, scaleY);
             set.start();
         }, 2000);
+    }
+
+    private void navigateToAuth() {
+        Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void init3DScene() {

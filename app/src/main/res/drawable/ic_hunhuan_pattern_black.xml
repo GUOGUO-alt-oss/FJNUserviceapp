@@ -1,0 +1,43 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    
+    <!-- 万年魂环：尖锐、侵略性的锯齿纹路，深邃且压抑 -->
+    
+    <!-- 外圈锯齿 -->
+    <path
+        android:pathData="M100,5 L110,25 L125,15 L130,35 L150,30 L150,50 L170,55 L165,75 L185,85 L175,100 L185,115 L165,125 L170,145 L150,150 L150,170 L130,165 L125,185 L110,175 L100,195 L90,175 L75,185 L70,165 L50,170 L50,150 L30,145 L35,125 L15,115 L25,100 L15,85 L35,75 L30,55 L50,50 L50,30 L70,35 L75,15 L90,25 Z"
+        android:strokeColor="#30FFFFFF"
+        android:strokeWidth="1"
+        android:fillColor="#00000000"/>
+
+    <!-- 内部裂纹 -->
+    <path
+        android:pathData="M100,100 L80,60 M100,100 L130,70 M100,100 L120,130 M100,100 L70,120"
+        android:strokeColor="#50FFFFFF"
+        android:strokeWidth="2"
+        android:strokeLineCap="round" />
+
+    <!-- 菱形晶体 -->
+    <path
+        android:pathData="M100,30 L110,50 L100,70 L90,50 Z"
+        android:fillColor="#40FFFFFF" />
+    <path
+        android:pathData="M100,170 L110,150 L100,130 L90,150 Z"
+        android:fillColor="#40FFFFFF" />
+    <path
+        android:pathData="M30,100 L50,110 L70,100 L50,90 Z"
+        android:fillColor="#40FFFFFF" />
+    <path
+        android:pathData="M170,100 L150,110 L130,100 L150,90 Z"
+        android:fillColor="#40FFFFFF" />
+        
+    <!-- 环形能量束 -->
+    <path
+        android:pathData="M100,100 m-85,0 a85,85 0 1,0 170,0 a85,85 0 1,0 -170,0"
+        android:strokeColor="#20FFFFFF"
+        android:strokeWidth="15"
+        android:fillColor="#00000000" />
+</vector>

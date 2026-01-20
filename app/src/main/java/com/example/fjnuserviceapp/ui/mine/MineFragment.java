@@ -1,16 +1,21 @@
 package com.example.fjnuserviceapp.ui.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.fjnuserviceapp.R;
+import com.example.fjnuserviceapp.auth.manager.SessionManager;
+import com.example.fjnuserviceapp.auth.manager.TokenManager;
+import com.example.fjnuserviceapp.auth.ui.AuthActivity;
 import com.example.fjnuserviceapp.databinding.FragmentMineBinding;
+import com.example.fjnuserviceapp.databinding.PopupMenuSettingsBinding;
 import com.example.fjnuserviceapp.model.UserProfile;
 import com.example.fjnuserviceapp.ui.study.StudyFragment;
 import com.example.fjnuserviceapp.utils.ToastUtils;
@@ -19,6 +24,9 @@ import java.util.Locale;
 public class MineFragment extends Fragment {
     private FragmentMineBinding binding;
     private ProfileViewModel viewModel;
+    private PopupWindow popupWindow;
+    private SessionManager sessionManager;
+    private TokenManager tokenManager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +38,10 @@ public class MineFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        
+        // 初始化TokenManager和SessionManager
+        tokenManager = new TokenManager(requireContext());
+        sessionManager = SessionManager.getInstance(tokenManager);
 
         setupObservers();
         setupFunctionEntries();
@@ -130,13 +142,66 @@ public class MineFragment extends Fragment {
                     .commit();
         });
 
+        // 系统设置项点击事件替换为显示下拉菜单
         setupEntry(binding.entrySettings, "系统设置", "通知与主题", android.R.drawable.ic_menu_preferences, v -> {
-            ToastUtils.showShort(getContext(), "设置功能开发中");
+            showSettingsPopupMenu(v);
         });
 
         setupEntry(binding.entryAbout, "关于应用", "Version 1.0.0", android.R.drawable.ic_menu_info_details, v -> {
             ToastUtils.showShort(getContext(), "福师大生活服务 App v1.0");
         });
+    }
+    
+    private void showSettingsPopupMenu(View anchorView) {
+        if (popupWindow == null) {
+            // 初始化PopupWindow
+            PopupMenuSettingsBinding popupBinding = PopupMenuSettingsBinding.inflate(getLayoutInflater());
+            
+            popupWindow = new PopupWindow(
+                    popupBinding.getRoot(),
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    true
+            );
+            
+            // 设置点击外部可关闭
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setFocusable(true);
+            
+            // 设置动画效果
+            popupWindow.setAnimationStyle(R.style.PopupMenuAnimation);
+            
+            // 通知与主题点击事件
+            popupBinding.menuNotificationTheme.setOnClickListener(v -> {
+                popupWindow.dismiss();
+                ToastUtils.showShort(getContext(), "通知与主题设置功能开发中");
+            });
+            
+            // 退出登录点击事件
+            popupBinding.menuLogout.setOnClickListener(v -> {
+                popupWindow.dismiss();
+                handleLogout();
+            });
+        }
+        
+        // 显示PopupWindow，位于系统设置项下方
+        popupWindow.showAsDropDown(anchorView);
+    }
+    
+    private void handleLogout() {
+        // 清除会话和Token
+        sessionManager.clearSession();
+        tokenManager.clearTokens();
+        
+        // 跳转到登录页面
+        Intent intent = new Intent(getActivity(), AuthActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        
+        // 结束当前Activity
+        if (getActivity() != null) {
+            getActivity().finish();
+        }
     }
 
     private void setupEntry(com.example.fjnuserviceapp.databinding.ItemFunctionEntryBinding entryBinding, String title,
