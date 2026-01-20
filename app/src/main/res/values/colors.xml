@@ -14,6 +14,11 @@
     <color name="light_blue">#F0F8FF</color>
     <color name="primary_text">#000000</color>
 
+    <!-- 原有颜色保留，新增以下3个 -->
+    <color name="glass_card_bg_dark">#222222</color>       <!-- 已读卡片背景 -->
+    <color name="glass_card_bg_pressed">#383838</color>   <!-- 卡片按压背景 -->
+
+
     <!-- 强调色 -->
     <color name="neon_cyan">#FF00F2FE</color>      <!-- 霓虹青 -->
     <color name="neon_purple">#FF4FACFE</color>    <!-- 霓虹紫 -->
