@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -14,7 +15,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- 标题+时间+星标行 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,14 +31,6 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <!-- 星标优先级图标（新增） -->
-            <ImageView
-                android:id="@+id/iv_star_badge"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginHorizontal="8dp"
-                android:src="@android:drawable/btn_star_big_off" />
 
             <!-- Time -->
             <TextView

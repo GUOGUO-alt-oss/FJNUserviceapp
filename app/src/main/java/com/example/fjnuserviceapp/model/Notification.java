@@ -15,15 +15,6 @@ public class Notification implements Serializable {
     public static final int TYPE_CHAT = 1;
     public static final int TYPE_SYSTEM = 2;
 
-    // 新增：优先级字段（0=普通，1=重要（星标），2=紧急（高亮星标））
-    private int priority;
-
-
-
-    // Getter/Setter（必须加）
-    public int getPriority() { return priority; }
-    public void setPriority(int priority) { this.priority = priority; }
-
     public Notification(String id, String title, String content, String time, String sender, int type) {
         this.id = id;
         this.title = title;

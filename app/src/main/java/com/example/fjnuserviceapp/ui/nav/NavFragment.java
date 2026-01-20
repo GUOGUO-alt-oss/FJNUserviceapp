@@ -330,13 +330,15 @@ public class NavFragment extends Fragment implements AMapLocationListener {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            // 返回主界面（StudyFragment）
+            // 返回主界面（移除 Fragment，显示首页内容）
             if (getActivity() instanceof MainActivity) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new StudyFragment())
+                        .remove(this) // 移除当前 NavFragment
                         .commit();
-                // 显示底部悬浮按钮
+                
+                // 恢复主页元素的显示
+                mainActivity.showMainPageElements();
                 mainActivity.showAllFloatButtons();
             }
             return true;
