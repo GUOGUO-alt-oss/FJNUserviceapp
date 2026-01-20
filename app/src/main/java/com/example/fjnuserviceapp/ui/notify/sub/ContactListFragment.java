@@ -64,12 +64,15 @@ public class ContactListFragment extends Fragment {
         }
     }
 
-    // TODO: 新增：左滑删除逻辑
+    // 路径：com/example/fjnuserviceapp/ui/notify/sub/ContactListFragment.java
     private void setupSwipeToDelete(RecyclerView recyclerView) {
+        // 改为支持左滑删除+右滑已读
         ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT) {
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             private final ColorDrawable deleteBg = new ColorDrawable(Color.parseColor("#FF4444"));
+            private final ColorDrawable readBg = new ColorDrawable(Color.parseColor("#4CAF50"));
             private final Drawable deleteIcon = ContextCompat.getDrawable(requireContext(), android.R.drawable.ic_menu_delete);
+            private final Drawable readIcon = ContextCompat.getDrawable(requireContext(), android.R.drawable.checkbox_on_background);
 
             @Override
             public boolean onMove(@NonNull RecyclerView rv,
@@ -81,7 +84,11 @@ public class ContactListFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getBindingAdapterPosition();
-                adapter.removeItem(position);
+                if (direction == ItemTouchHelper.LEFT) {
+                    adapter.removeItem(position); // 左滑删除
+                } else if (direction == ItemTouchHelper.RIGHT) {
+                    adapter.markAsRead(position); // 右滑标记已读
+                }
             }
 
             @Override
@@ -95,11 +102,24 @@ public class ContactListFragment extends Fragment {
                 int iconTop = itemView.getTop() + (itemView.getHeight() - iconSize) / 2;
                 int iconBottom = iconTop + iconSize;
 
-                if (dX < 0) {
+                // 右滑：绿色背景+对勾（标记已读）
+                if (dX > 0) {
+                    readBg.setBounds(itemView.getLeft(), itemView.getTop(),
+                            itemView.getLeft() + (int) dX, itemView.getBottom());
+                    readBg.draw(c);
+                    if (readIcon != null) {
+                        int iconLeft = itemView.getLeft() + 20;
+                        int iconRight = iconLeft + iconSize;
+                        readIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
+                        readIcon.setTint(Color.WHITE);
+                        readIcon.draw(c);
+                    }
+                }
+                // 左滑：红色背景+删除图标
+                else if (dX < 0) {
                     deleteBg.setBounds(itemView.getRight() + (int) dX, itemView.getTop(),
                             itemView.getRight(), itemView.getBottom());
                     deleteBg.draw(c);
-
                     if (deleteIcon != null) {
                         int iconRight = itemView.getRight() - 20;
                         int iconLeft = iconRight - iconSize;

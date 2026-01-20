@@ -22,7 +22,7 @@ import com.example.fjnuserviceapp.utils.NotificationMockData;
 public class MessageCenterFragment extends Fragment {
     private FragmentMessageCenterBinding binding;
     private NotificationAdapter adapter;
-    private ItemTouchHelper itemTouchHelper; // TODO: 新增
+    private ItemTouchHelper itemTouchHelper;
 
     @Nullable
     @Override
@@ -37,18 +37,28 @@ public class MessageCenterFragment extends Fragment {
 
         binding.rvMessageCenter.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new NotificationAdapter(NotificationMockData.getSystemMessages());
+
+        // 新增：设置已读状态回调（解决静态方法调用错误）
+        adapter.setOnNotificationStatusChangeListener(position -> {
+            adapter.markAsRead(position);
+        });
+
         binding.rvMessageCenter.setAdapter(adapter);
 
-        // TODO: 新增：左滑删除配置（仅左滑，不影响点击）
-        setupSwipeToDelete(binding.rvMessageCenter);
+        // 左滑删除+右滑已读 配置
+        setupSwipeToDeleteAndRead(binding.rvMessageCenter);
     }
 
-    // TODO: 新增：左滑删除逻辑
-    private void setupSwipeToDelete(androidx.recyclerview.widget.RecyclerView recyclerView) {
+    // 核心修改：左滑删除+右滑标记已读逻辑
+    private void setupSwipeToDeleteAndRead(androidx.recyclerview.widget.RecyclerView recyclerView) {
         ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT) { // 仅左滑删除
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) { // 支持左滑+右滑
+            // 左滑删除：红色背景+删除图标
             private final ColorDrawable deleteBg = new ColorDrawable(Color.parseColor("#FF4444"));
             private final Drawable deleteIcon = ContextCompat.getDrawable(requireContext(), android.R.drawable.ic_menu_delete);
+            // 右滑已读：绿色背景+对勾图标
+            private final ColorDrawable readBg = new ColorDrawable(Color.parseColor("#4CAF50"));
+            private final Drawable readIcon = ContextCompat.getDrawable(requireContext(), android.R.drawable.checkbox_on_background);
 
             @Override
             public boolean onMove(@NonNull androidx.recyclerview.widget.RecyclerView rv,
@@ -60,10 +70,16 @@ public class MessageCenterFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull androidx.recyclerview.widget.RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getBindingAdapterPosition();
-                adapter.removeItem(position); // 调用Adapter的删除方法
+                if (direction == ItemTouchHelper.LEFT) {
+                    // 左滑：删除项
+                    adapter.removeItem(position);
+                } else if (direction == ItemTouchHelper.RIGHT) {
+                    // 右滑：标记为已读
+                    adapter.markAsRead(position);
+                }
             }
 
-            // 自定义左滑背景和图标
+            // 自定义滑动背景和图标
             @Override
             public void onChildDraw(@NonNull Canvas c, @NonNull androidx.recyclerview.widget.RecyclerView rv,
                                     @NonNull androidx.recyclerview.widget.RecyclerView.ViewHolder vh, float dX, float dY,
@@ -71,12 +87,26 @@ public class MessageCenterFragment extends Fragment {
                 super.onChildDraw(c, rv, vh, dX, dY, actionState, isCurrentlyActive);
 
                 View itemView = vh.itemView;
-                int iconSize = deleteIcon != null ? deleteIcon.getIntrinsicWidth() : 48;
+                int iconSize = 48; // 图标大小
                 int iconTop = itemView.getTop() + (itemView.getHeight() - iconSize) / 2;
                 int iconBottom = iconTop + iconSize;
 
-                // 左滑删除：红色背景+删除图标
-                if (dX < 0) {
+                // 右滑：绿色背景+对勾（标记已读）
+                if (dX > 0) {
+                    readBg.setBounds(itemView.getLeft(), itemView.getTop(),
+                            itemView.getLeft() + (int) dX, itemView.getBottom());
+                    readBg.draw(c);
+
+                    if (readIcon != null) {
+                        int iconLeft = itemView.getLeft() + 20;
+                        int iconRight = iconLeft + iconSize;
+                        readIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
+                        readIcon.setTint(Color.WHITE);
+                        readIcon.draw(c);
+                    }
+                }
+                // 左滑：红色背景+删除图标
+                else if (dX < 0) {
                     deleteBg.setBounds(itemView.getRight() + (int) dX, itemView.getTop(),
                             itemView.getRight(), itemView.getBottom());
                     deleteBg.draw(c);
