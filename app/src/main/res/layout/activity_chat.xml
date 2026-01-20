@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_main_gradient">
+    android:background="@drawable/bg_main_gradient"> <!-- 应用你的渐变背景 -->
 
-    <!-- Top Bar -->
+    <!-- Top Bar（保留设置按钮+原有样式） -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,9 +33,21 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"/>
+
+        <!-- 右上角设置按钮（保留你的样式） -->
+        <ImageView
+            android:id="@+id/iv_chat_setting"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_preferences"
+            android:contentDescription="Settings"
+            android:tint="#FFFFF0"
+            android:layout_marginLeft="16dp"
+            tools:ignore="UseAppTint" />
+
     </LinearLayout>
 
-    <!-- Chat List -->
+    <!-- Chat List（消息列表，ID匹配代码） -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_chat"
         android:layout_width="match_parent"
@@ -42,7 +56,7 @@
         android:padding="16dp"
         android:clipToPadding="false"/>
 
-    <!-- Input Area -->
+    <!-- Input Area（输入区域，保留原有样式+ID） -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
